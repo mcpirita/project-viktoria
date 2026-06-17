@@ -1,0 +1,322 @@
+@import "tailwindcss";
+
+/* ===========================================================================
+ * Victoria Martyanova — Design System (Phase D)
+ * Tailwind v4 CSS-first. All design tokens live in @theme below.
+ * Aesthetic: editorial minimalism — warm paper base, dusty-rose section
+ * fields, deep maroon ink, hairline rules. Serif typography (Fraunces) set
+ * in caps with wide tracking for labels. Mobile-first, anti-CLS.
+ * ========================================================================= */
+
+@theme {
+  /* ---- Color: a warm rose/maroon editorial palette --------------------- */
+  /* Base (paper) — slightly warm off-white, not pure #fff (less clinical) */
+  --color-paper: #fbf7f4;
+  --color-paper-deep: #f6efe9; /* faint warm panel on paper sections        */
+
+  /* Rose section fields (works / contact backgrounds) — dusty, not candy   */
+  --color-rose: #f3d9d2;       /* primary rose field                         */
+  --color-rose-soft: #f7e4df;  /* lighter rose, for gradients / hovers       */
+  --color-rose-deep: #e9c2bb;  /* deeper rose, gradient end / pressed        */
+
+  /* Ink — deep maroon / oxblood. Primary text + UI.                        */
+  --color-maroon: #5c1d24;     /* primary text                              */
+  --color-maroon-deep: #421217;/* headings / max contrast                    */
+  --color-maroon-soft: #804049;/* secondary text, captions on paper          */
+  --color-maroon-muted: #9c6970;/* tertiary / disabled / placeholder ink     */
+
+  /* Hairlines — thin editorial rules. Tuned per background.                */
+  --color-line: #e3d3cb;       /* hairline on paper                          */
+  --color-line-rose: #e0b9b1;  /* hairline on rose                           */
+  --color-line-ink: #5c1d2433; /* maroon hairline @ 20% (under header etc.)  */
+
+  /* Semantic aliases so utilities read intent (bg-background, text-ink…)   */
+  --color-background: var(--color-paper);
+  --color-foreground: var(--color-maroon);
+  --color-accent: var(--color-rose);
+
+  /* ---- Typography ------------------------------------------------------ */
+  /* Serif = brand voice. Sans = technical labels (clock, fallbacks).       */
+  --font-serif: var(--font-fraunces), "Fraunces", Georgia, "Times New Roman",
+    serif;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Helvetica Neue",
+    Arial, sans-serif;
+
+  /* Default body font → serif (editorial). */
+  --default-font-family: var(--font-serif);
+
+  /* Type scale — mobile-first. Body base = 16px (no-zoom legibility).      */
+  /* Sizes are fluid via clamp so the hero scales without breakpoints.      */
+  --text-2xs: 0.6875rem; /* 11px — micro labels / clock                     */
+  --text-2xs--line-height: 1.2;
+  --text-xs: 0.75rem;    /* 12px — captions, eyebrow labels                 */
+  --text-xs--line-height: 1.35;
+  --text-sm: 0.875rem;   /* 14px — secondary                                */
+  --text-sm--line-height: 1.45;
+  --text-base: 1rem;     /* 16px — body floor                               */
+  --text-base--line-height: 1.6;
+  --text-lg: 1.125rem;   /* 18px                                            */
+  --text-lg--line-height: 1.5;
+  --text-xl: 1.375rem;   /* 22px — sub-headings                             */
+  --text-xl--line-height: 1.3;
+  --text-2xl: clamp(1.75rem, 1.2rem + 2.6vw, 2.75rem);   /* section titles  */
+  --text-2xl--line-height: 1.12;
+  --text-3xl: clamp(2.25rem, 1.2rem + 5vw, 4rem);        /* large display   */
+  --text-3xl--line-height: 1.05;
+  --text-hero: clamp(2.75rem, 1rem + 9vw, 7.5rem);       /* hero name       */
+  --text-hero--line-height: 0.95;
+
+  /* Tracking (letter-spacing) — wide tracking is the signature.           */
+  --tracking-tightest: -0.02em; /* large display serif, optical tighten     */
+  --tracking-tight: -0.01em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.08em;      /* caption / nav caps                        */
+  --tracking-wider: 0.16em;     /* eyebrow labels (CLIENTS:, SELECTED WORKS:)*/
+  --tracking-widest: 0.28em;    /* micro labels / spaced-out caps            */
+
+  /* Font weights available from Fraunces (variable). */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  /* ---- Spacing / layout ------------------------------------------------ */
+  /* Tailwind's default --spacing is 0.25rem; keep it and add named tokens. */
+  --spacing-touch: 2.75rem;    /* 44px — minimum tap target (a11y floor)     */
+  --spacing-gutter: 1.25rem;   /* mobile page gutter (20px)                  */
+  --spacing-gutter-lg: 2.5rem; /* desktop page gutter (40px)                 */
+
+  /* Content container max width — editorial measure, not full-bleed text.  */
+  --container-site: 90rem;     /* 1440px — outer frame                       */
+  --container-prose: 42rem;    /* 672px — bio / reading measure              */
+
+  /* ---- Radius — editorial = near-square. Minimal rounding.             */
+  --radius-none: 0px;
+  --radius-xs: 1px;
+  --radius-sm: 2px;
+  --radius-md: 3px;
+
+  /* ---- Motion ---------------------------------------------------------- */
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ===========================================================================
+ * Base layer — global resets & defaults grounded in the tokens above.
+ * ========================================================================= */
+@layer base {
+  html {
+    /* anti-zoom safety + smooth in-page anchors */
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-maroon);
+    font-family: var(--font-serif);
+    font-size: var(--text-base); /* 16px floor */
+    line-height: var(--text-base--line-height);
+    font-synthesis-weight: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    /* no horizontal scroll, ever */
+    overflow-x: hidden;
+  }
+
+  /* Media defaults — block-level, never overflow, intrinsic ratio honored. */
+  img,
+  video,
+  picture,
+  svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  ::selection {
+    background-color: var(--color-maroon);
+    color: var(--color-paper);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ===========================================================================
+ * Component utilities — reusable primitives Phase F consumes via classNames.
+ * (React wrappers also live in src/components/ui/* — these back them.)
+ * ========================================================================= */
+@layer components {
+  /* Eyebrow / section label — wide-tracked caps in sans-ish serif.         */
+  .label-eyebrow {
+    font-family: var(--font-serif);
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--color-maroon-soft);
+  }
+
+  /* Micro label (clock, nav micro) — tightest, spaced caps.                */
+  .label-micro {
+    font-family: var(--font-sans);
+    font-size: var(--text-2xs);
+    font-weight: 500;
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--color-maroon-soft);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Work caption — CLIENT, TITLE, PRODUCTION. The content-model primitive. */
+  .work-caption {
+    font-family: var(--font-serif);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+  .work-caption__client {
+    color: var(--color-maroon-deep);
+    font-weight: var(--font-weight-semibold);
+  }
+  .work-caption__title {
+    color: var(--color-maroon);
+  }
+  .work-caption__production {
+    color: var(--color-maroon-muted);
+  }
+
+  /* Hairline rule — the editorial divider. Use as a <hr> or border.        */
+  .hairline {
+    border: 0;
+    border-top: 1px solid var(--color-line);
+    margin: 0;
+  }
+  .hairline--rose {
+    border-top-color: var(--color-line-rose);
+  }
+  .hairline--ink {
+    border-top-color: var(--color-line-ink);
+  }
+
+  /* Link, editorial underline-on-hover. */
+  .link-editorial {
+    color: var(--color-maroon);
+    text-decoration: none;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.4s var(--ease-editorial);
+  }
+  .link-editorial:hover {
+    background-size: 100% 1px;
+  }
+}
+
+/* ===========================================================================
+ * Phase F additions — showcase-only utilities (marquee, view-transition,
+ * floating preview). Appended after the design system; does not touch @theme.
+ * ========================================================================= */
+
+/* ---- Clients marquee — seamless infinite scroll of two duplicated tracks. */
+.marquee {
+  display: flex;
+  width: 100%;
+}
+.marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+.marquee__track {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  min-width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  animation: marquee-scroll 34s linear infinite;
+  will-change: transform;
+}
+.marquee__item {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  font-family: var(--font-serif);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+.marquee__dot {
+  color: var(--color-maroon-muted);
+  margin: 0 0.9rem;
+}
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* ---- Index row hover affordance — subtle warm wash + nudge of the caption. */
+.index-row {
+  position: relative;
+  text-decoration: none;
+  transition: background-color 0.35s var(--ease-editorial);
+}
+@media (hover: hover) {
+  .index-row:hover {
+    background-color: var(--color-paper-deep);
+  }
+  .index-row:hover .index-row__caption {
+    transform: translateX(6px);
+  }
+}
+.index-row__caption {
+  transition: transform 0.4s var(--ease-editorial);
+}
+
+/* ---- Floating cursor-preview entrance (desktop only). */
+.floating-preview {
+  animation: preview-in 0.28s var(--ease-editorial) both;
+}
+@keyframes preview-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ---- Final ↔ Process: cross-fade via the View Transitions API. */
+::view-transition-old(gallery),
+::view-transition-new(gallery) {
+  animation-duration: 0.4s;
+  animation-timing-function: var(--ease-editorial);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track {
+    animation: none;
+  }
+  .floating-preview {
+    animation: none;
+  }
+}
