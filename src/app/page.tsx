@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   Body,
   Button,
@@ -96,24 +97,20 @@ export default async function Home() {
       {/* ---- About (rose field, server) ---------------------------------- */}
       <Section id="about" tone="rose">
         <div className="grid grid-cols-1 gap-x-12 gap-y-10 lg:grid-cols-[minmax(0,22rem)_1fr]">
-          {/* portrait placeholder — assets/portrait/ empty, Phase H fills it */}
+          {/* portrait — square crop, тестовый вариант (assets/portrait/IMG_5470.JPG) */}
           <div
             className="relative w-full overflow-hidden rounded-[--radius-sm] bg-[--color-rose-deep]"
-            style={{ aspectRatio: "4 / 5" }}
-            aria-hidden
+            style={{ aspectRatio: "1 / 1" }}
           >
-            <div
-              className="absolute inset-0 opacity-[0.35]"
-              style={{
-                backgroundImage:
-                  "repeating-linear-gradient(135deg, transparent 0 12px, rgba(92,29,36,0.06) 12px 13px)",
-              }}
+            <Image
+              src="/portrait/viktoria-1200.webp"
+              alt="Viktoria Martjanova"
+              fill
+              sizes="(min-width: 1024px) 22rem, 100vw"
+              placeholder="blur"
+              blurDataURL="data:image/webp;base64,UklGRtYAAABXRUJQVlA4IMoAAABQBQCdASoUABQAPtFgqE+oJSOiKAgBABoJQBOmWYS4wUq6BKyXKtlWUaKZxz03OSnpN/AA/s0Yu/SIfgvxbuYXlocDiwHmqKC12pibjBCdWAQkMbGpY8Y3EDHswwNIRPdS5NyKOiYgIrSy7dTxAbflvWv+tpVH3BBttPVz+ttW3/XdRdPye1NHCO0waKwnMo8hF593oU0BWUyd+QLKTsunohBd53vIkb+rjWNmdkp2BUH/jIlD+TnS0M3Uf6kn41XsE9MmwBBQ8gAA"
+              className="object-cover"
             />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="label-micro text-[--color-maroon-muted]">
-                PORTRAIT
-              </span>
-            </div>
           </div>
 
           <div>
