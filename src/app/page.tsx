@@ -59,14 +59,14 @@ export default async function Home() {
       {/* ---- Hero (server) ----------------------------------------------- */}
       <Section
         tone="paper"
-        className="flex min-h-[88vh] flex-col justify-center"
+        className="flex min-h-[78vh] flex-col"
       >
         <div className="flex items-center justify-between">
           <MicroLabel>PORTFOLIO — ART DEPARTMENT</MicroLabel>
           <LiveClock />
         </div>
 
-        <div className="mt-[clamp(2.5rem,10vh,6rem)]">
+        <div className="mt-[clamp(2rem,7vh,4rem)]">
           <Eyebrow className="mb-5">VIKTORIA MARTJANOVA</Eyebrow>
           <h1 className="font-serif text-[length:--text-hero] font-light uppercase leading-[--text-hero--line-height] tracking-[--tracking-tightest] text-[--color-maroon-deep]">
             <span className="block">Costume,</span>
@@ -86,7 +86,7 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="mt-[clamp(2.5rem,8vh,5rem)]">
+        <div className="mt-auto pt-[clamp(2.5rem,7vh,5rem)]">
           <Marquee items={CLIENTS} />
         </div>
       </Section>

@@ -199,11 +199,13 @@ function formatIssues(error: import("zod").ZodError): string {
 
 /** Все работы, отсортированные по order. Валидация падает на кривом контенте. */
 export async function getWorks(): Promise<ResolvedWork[]> {
+  "use cache";
   return loadAllWorks();
 }
 
 /** Одна работа по slug, либо undefined. */
 export async function getWork(slug: string): Promise<ResolvedWork | undefined> {
+  "use cache";
   const works = await loadAllWorks();
   return works.find((w) => w.slug === slug);
 }
@@ -213,6 +215,7 @@ export async function getWork(slug: string): Promise<ResolvedWork | undefined> {
  * CATEGORIES (а не в порядке появления). Для фильтров витрины фазы F.
  */
 export async function getCategories(): Promise<Category[]> {
+  "use cache";
   const works = await loadAllWorks();
   const present = new Set(works.map((w) => w.category));
   return CATEGORIES.filter((c) => present.has(c));
