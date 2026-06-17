@@ -1,9 +1,0 @@
-{
-  "title": "Aroma",
-  "client": "Jameson",
-  "production": "Highsnobiety",
-  "category": "commercial",
-  "order": 2,
-  "final": ["still-01", "still-02"],
-  "process": ["prep-01"]
-}
