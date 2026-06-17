@@ -17,7 +17,7 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "Victoria Martyanova",
+  title: "Viktoria Martjanova",
   description: "Art department, costume & set design — portfolio.",
 };
 

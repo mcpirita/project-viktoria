@@ -14,7 +14,7 @@ import {
 } from "@/components/ui";
 
 export const metadata: Metadata = {
-  title: "Style Guide — Victoria Martyanova",
+  title: "Style Guide — Viktoria Martjanova",
   robots: { index: false, follow: false },
 };
 
@@ -96,7 +96,7 @@ export default function StyleGuide() {
           <Display>
             Victoria
             <br />
-            Martyanova
+            Martjanova
           </Display>
           <p className="mt-6 max-w-[34ch] font-serif text-[length:--text-lg] uppercase tracking-[--tracking-wide] text-[--color-maroon-soft]">
             Art department for film &amp; advertising
@@ -254,7 +254,7 @@ export default function StyleGuide() {
             </Caption>
             <Container width="prose" className="px-0">
               <Body className="uppercase tracking-[--tracking-wide]">
-                Victoria Martyanova is an art department artist working across
+                Viktoria Martjanova is an art department artist working across
                 film and advertising. She moves between costume and wardrobe,
                 set design, props and production design, shaping the look of a
                 scene from concept to set.

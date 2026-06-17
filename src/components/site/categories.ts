@@ -6,12 +6,12 @@ import type { Category } from "@/lib/schema";
  * Kept tiny and pure so both server (page) and client (Filters) can import it.
  */
 export const CATEGORY_LABELS: Record<Category, string> = {
-  commercials: "COMMERCIALS",
-  film: "FILM",
+  commercial: "COMMERCIAL",
   "music-video": "MUSIC VIDEO",
-  costume: "COSTUME",
-  "set-props": "SET & PROPS",
-  productions: "PRODUCTIONS",
+  editorial: "EDITORIAL",
+  film: "FILM",
+  theater: "THEATER",
+  art: "ART",
 };
 
 /** "Show all" pseudo-filter marker (copy-en.md §5). */

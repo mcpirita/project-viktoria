@@ -66,7 +66,7 @@ export default async function Home() {
         </div>
 
         <div className="mt-[clamp(2.5rem,10vh,6rem)]">
-          <Eyebrow className="mb-5">VICTORIA MARTYANOVA</Eyebrow>
+          <Eyebrow className="mb-5">VIKTORIA MARTJANOVA</Eyebrow>
           <h1 className="font-serif text-[length:--text-hero] font-light uppercase leading-[--text-hero--line-height] tracking-[--tracking-tightest] text-[--color-maroon-deep]">
             <span className="block">Costume,</span>
             <span className="block">Set &amp; Props,</span>
@@ -121,15 +121,13 @@ export default async function Home() {
               ABOUT
             </Eyebrow>
             <Body className="max-w-[46ch] uppercase tracking-[--tracking-wide]">
-              Victoria Martyanova is a{" "}
-              <span className="text-[--color-maroon-muted]">
-                [city — TBC]
-              </span>{" "}
-              art department artist working across film and advertising. Her work
-              spans costume and wardrobe, set design, props and production design
-              — shaping the look of a scene from first concept to the finished
-              set. She also writes and stages her own productions, treating every
-              project, commercial or personal, as a complete visual world.
+              Viktoria Martjanova is a Tallinn-based art department artist
+              working across film and advertising. With over a decade on set, her
+              work spans costume and wardrobe, set design, props and production
+              design — shaping the look of a scene from first concept to the
+              finished set. She also writes and stages her own productions,
+              treating every project, commercial or personal, as a complete
+              visual world.
             </Body>
             <div className="mt-10">
               <Marquee items={CLIENTS} label="SELECTED CLIENTS:" />
@@ -147,25 +145,50 @@ export default async function Home() {
 
         <dl className="mt-12 grid grid-cols-1 gap-x-12 gap-y-6 sm:grid-cols-2 lg:max-w-3xl">
           {[
-            { k: "EMAIL", v: "[email — TBC]" },
-            { k: "AGENCY", v: "[agency — TBC]" },
-            { k: "INSTAGRAM", v: "[@handle — TBC]" },
-            { k: "IMDB", v: "[profile — TBC]" },
+            {
+              k: "EMAIL",
+              v: "martjanovaviktoria@gmail.com",
+              href: "mailto:martjanovaviktoria@gmail.com",
+            },
+            {
+              k: "INSTAGRAM",
+              v: "@fake.versace.v",
+              href: "https://instagram.com/fake.versace.v",
+            },
+            {
+              k: "IMDB",
+              v: "imdb.com/name/nm11979739",
+              href: "https://www.imdb.com/name/nm11979739/",
+            },
+            { k: "AGENCY", v: "[agency — TBC]", href: undefined },
           ].map((row) => (
             <div
               key={row.k}
               className="flex items-baseline justify-between gap-6 border-b border-[--color-line-rose] pb-3"
             >
               <dt className="label-eyebrow">{row.k}</dt>
-              <dd className="font-serif text-[length:--text-sm] uppercase tracking-[--tracking-wide] text-[--color-maroon-muted]">
-                {row.v}
+              <dd className="font-serif text-[length:--text-sm] tracking-[--tracking-wide] text-[--color-maroon]">
+                {row.href ? (
+                  <a
+                    href={row.href}
+                    target={row.href.startsWith("http") ? "_blank" : undefined}
+                    rel={row.href.startsWith("http") ? "noreferrer" : undefined}
+                    className="link-editorial lowercase"
+                  >
+                    {row.v}
+                  </a>
+                ) : (
+                  <span className="uppercase text-[--color-maroon-muted]">
+                    {row.v}
+                  </span>
+                )}
               </dd>
             </div>
           ))}
         </dl>
 
         <p className="mt-12 font-serif text-[length:--text-xs] uppercase tracking-[--tracking-wide] text-[--color-maroon-muted]">
-          © 2026 Victoria Martyanova
+          © 2026 Viktoria Martjanova
         </p>
       </Section>
     </main>

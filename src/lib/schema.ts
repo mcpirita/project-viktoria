@@ -19,17 +19,17 @@ import { z } from "zod";
 
 /**
  * Категория работы. Это ПОЛЕ, а не роут (роутинг — зона фаз F/H).
- * Набор расширяемый: сейчас точно есть `commercials`, остальные —
- * предложение из плана под будущие папки (Music Video, Film, Theatre, Art).
+ * Набор подтверждён Викторией (2026-06-17): commercial, music video,
+ * editorial, film, theater, art. Порядок здесь = порядок фильтров в шапке.
  * Добавление категории = одна строка здесь.
  */
 export const CATEGORIES = [
-  "commercials",
-  "film",
+  "commercial",
   "music-video",
-  "costume",
-  "set-props",
-  "productions",
+  "editorial",
+  "film",
+  "theater",
+  "art",
 ] as const;
 
 export const categorySchema = z.enum(CATEGORIES);

@@ -32,7 +32,7 @@ export function Header({
             href="#top"
             className="font-serif text-[length:--text-xs] uppercase tracking-[--tracking-wider] text-[--color-maroon-deep] sm:text-[length:--text-sm]"
           >
-            Victoria Martyanova
+            Viktoria Martjanova
           </a>
 
           {/* centre filters — desktop only (mobile strip is below) */}

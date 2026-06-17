@@ -36,11 +36,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const work = await getWork(slug);
-  if (!work) return { title: "Work — Victoria Martyanova" };
+  if (!work) return { title: "Work — Viktoria Martjanova" };
   const name = [work.client, work.title].filter(Boolean).join(" — ");
   return {
-    title: `${name} — Victoria Martyanova`,
-    description: `${work.client}${work.title ? `, ${work.title}` : ""} — art department by Victoria Martyanova.`,
+    title: `${name} — Viktoria Martjanova`,
+    description: `${work.client}${work.title ? `, ${work.title}` : ""} — art department by Viktoria Martjanova.`,
   };
 }
 
@@ -68,7 +68,7 @@ export default async function WorkPage({
             ← Index
           </Link>
           <span className="font-serif text-[length:--text-xs] uppercase tracking-[--tracking-wider] text-[--color-maroon-deep]">
-            Victoria Martyanova
+            Viktoria Martjanova
           </span>
         </Container>
         <Hairline tone="ink" />

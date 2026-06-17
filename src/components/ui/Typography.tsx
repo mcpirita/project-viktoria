@@ -11,7 +11,7 @@ type BaseTextProps = {
   className?: string;
 };
 
-/** Hero display name — the largest type on the site (e.g. VICTORIA MARTYANOVA). */
+/** Hero display name — the largest type on the site (e.g. VIKTORIA MARTJANOVA). */
 export function Display({
   children,
   as: Tag = "h1",
