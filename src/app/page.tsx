@@ -98,20 +98,16 @@ export default async function Home() {
       <Section id="about" tone="rose">
         <div className="grid grid-cols-1 gap-x-12 gap-y-10 lg:grid-cols-[minmax(0,22rem)_1fr]">
           {/* portrait — square crop, тестовый вариант (assets/portrait/IMG_5470.JPG) */}
-          <div
-            className="relative w-full overflow-hidden rounded-[--radius-sm] bg-[--color-rose-deep]"
-            style={{ aspectRatio: "1 / 1" }}
-          >
-            <Image
-              src="/portrait/viktoria-1200.webp"
-              alt="Viktoria Martjanova"
-              fill
-              sizes="(min-width: 1024px) 22rem, 100vw"
-              placeholder="blur"
-              blurDataURL="data:image/webp;base64,UklGRtYAAABXRUJQVlA4IMoAAABQBQCdASoUABQAPtFgqE+oJSOiKAgBABoJQBOmWYS4wUq6BKyXKtlWUaKZxz03OSnpN/AA/s0Yu/SIfgvxbuYXlocDiwHmqKC12pibjBCdWAQkMbGpY8Y3EDHswwNIRPdS5NyKOiYgIrSy7dTxAbflvWv+tpVH3BBttPVz+ttW3/XdRdPye1NHCO0waKwnMo8hF593oU0BWUyd+QLKTsunohBd53vIkb+rjWNmdkp2BUH/jIlD+TnS0M3Uf6kn41XsE9MmwBBQ8gAA"
-              className="object-cover"
-            />
-          </div>
+          <Image
+            src="/portrait/viktoria-1200.webp"
+            alt="Viktoria Martjanova"
+            width={1200}
+            height={1200}
+            sizes="(min-width: 1024px) 22rem, 100vw"
+            placeholder="blur"
+            blurDataURL="data:image/webp;base64,UklGRtYAAABXRUJQVlA4IMoAAABQBQCdASoUABQAPtFgqE+oJSOiKAgBABoJQBOmWYS4wUq6BKyXKtlWUaKZxz03OSnpN/AA/s0Yu/SIfgvxbuYXlocDiwHmqKC12pibjBCdWAQkMbGpY8Y3EDHswwNIRPdS5NyKOiYgIrSy7dTxAbflvWv+tpVH3BBttPVz+ttW3/XdRdPye1NHCO0waKwnMo8hF593oU0BWUyd+QLKTsunohBd53vIkb+rjWNmdkp2BUH/jIlD+TnS0M3Uf6kn41XsE9MmwBBQ8gAA"
+            className="h-auto w-full self-start rounded-[--radius-sm] object-cover"
+          />
 
           <div>
             <Eyebrow as="h2" className="mb-6">
