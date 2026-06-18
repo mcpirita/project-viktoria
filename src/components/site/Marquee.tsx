@@ -26,11 +26,11 @@ export function Marquee({
   );
 
   return (
-    <div className="flex items-center gap-4 overflow-hidden">
+    <div className="flex items-center gap-4">
       <span className="label-eyebrow shrink-0 text-[--color-maroon-soft]">
         {label}
       </span>
-      <div className="marquee relative min-w-0 flex-1">
+      <div className="marquee relative min-w-0 flex-1 overflow-hidden">
         {track}
         {track}
       </div>
