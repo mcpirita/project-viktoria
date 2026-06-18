@@ -20,6 +20,17 @@
  *
  * Idempotent: a content cache keyed by source mtime+size lives in
  *   .cache/media.json  (gitignored) — a second run skips unchanged sources.
+ *
+ * MERGE, not overwrite: each run LOADS the existing manifest and only
+ * adds/updates the keys it processed this run. Works whose source folder isn't
+ * present anymore (e.g. added by hand, or imported earlier) keep their entries —
+ * so dropping a new folder into the source tree and re-running is safe and never
+ * silently deletes other works. (Renaming a folder leaves the old slug's keys as
+ * harmless orphans; nothing references them, the site ignores them.)
+ *
+ * Slug mapping: a source folder's slug is auto-derived from its name (workSlug),
+ * UNLESS it's listed in SLUG_OVERRIDES below — use that when a folder name would
+ * otherwise produce a slug different from the work's folder in src/content/works/.
  */
 
 import { spawnSync } from "node:child_process";
@@ -112,9 +123,21 @@ function slugify(input: string): string {
     .replace(/-{2,}/g, "-");
 }
 
+/**
+ * Явный маппинг «имя папки-источника → slug работы». Нужен там, где
+ * автогенерация (workSlug) дала бы slug, не совпадающий с папкой работы в
+ * src/content/works/. Папки, которых тут нет, получают slug автоматически.
+ * Добавляя новую работу с «неудобным» именем папки — впиши соответствие сюда.
+ */
+const SLUG_OVERRIDES: Record<string, string> = {
+  "Tommy Cash x Maison Margiela": "maison-margiela-tommy-cash",
+  "Yale - Smart Locks - Sales Videos": "yale-smart-locks",
+};
+
 /** Work-folder slug, capped to a few words so e.g.
  *  "Bolt Whatever you do there is Bolt for that" -> "bolt-whatever-you-do". */
 function workSlug(folderName: string): string {
+  if (SLUG_OVERRIDES[folderName]) return SLUG_OVERRIDES[folderName];
   const full = slugify(folderName);
   if (!full) return "work";
   return full.split("-").slice(0, SLUG_MAX_WORDS).join("-");
@@ -302,7 +325,11 @@ async function main() {
   }
 
   const cache = await readJson<Cache>(CACHE_PATH, {});
-  const manifest: Manifest = {};
+  // MERGE base: start from the existing manifest so works not present in the
+  // source tree this run keep their entries (see header). New/changed keys
+  // below add to or overwrite this base; nothing else is dropped.
+  const manifest: Manifest = await readJson<Manifest>(MANIFEST_PATH, {});
+  const before = Object.keys(manifest).length;
   const slugMap = new Map<string, string>(); // folder -> slug, for the report
   const stats: Stats = { images: 0, posters: 0, cached: 0, skipped: [] };
 
@@ -398,7 +425,11 @@ async function main() {
   console.log(`  images processed : ${stats.images}`);
   console.log(`  video posters    : ${stats.posters}`);
   console.log(`  served from cache: ${stats.cached}`);
-  console.log(`  manifest entries : ${Object.keys(ordered).length}`);
+  console.log(
+    `  manifest entries : ${Object.keys(ordered).length} (было ${before}, +${
+      Object.keys(ordered).length - before
+    } merge)`,
+  );
   console.log(`  skipped          : ${stats.skipped.length}`);
   for (const s of stats.skipped) {
     console.log(`    - ${path.relative(SOURCE, s.file)} :: ${s.reason}`);
