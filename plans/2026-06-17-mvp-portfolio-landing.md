@@ -2,7 +2,7 @@
 
 **Статус:** активный
 **Дата создания:** 2026-06-17
-**Последнее обновление:** 2026-06-17 (Фаза 1: A–G реализованы параллельными агентами по DAG за 3 волны, `next build` зелёный; H/I/J заблокированы — ждут данных Виктории / деплоя)
+**Последнее обновление:** 2026-06-17 (Фаза 1: A–G реализованы; F grid-first; **H2 — внесена съёмочная группа по всем работам + 2 новых проекта из `Commercials/New Info` → 12 работ, карточка показывает кредиты**; `next build` зелёный; осталось от Виктории — видео-ссылки/портрет/агентство; I/J — деплой/QA)
 **Цель:** Англоязычный сайт-портфолио художника арт-департамента (кино/реклама, костюмы, сет-дизайн, пропсы, постановки). Сначала рабочий сайт (контент наполняем сами), затем своя админка для самостоятельного редактирования Викторией.
 
 ---
@@ -54,6 +54,19 @@
 - **Проверка на реальном железе** (или эмуляции): iPhone (Safari) + Android (Chrome), узкий и средний экран.
 
 ### Дизайн / UX
+
+> **⚠️ Пересмотр подхода фазы F (2026-06-17, Дмитрий): index-first → grid-first.**
+> Index-list (кадр только по hover/тапу) делал экран пустым — работы не читались сразу.
+> Решение: главная теперь **видимая курируемая СЕТКА** превью-кадров (фото + видео-постеры)
+> на розовом поле, как в референсе Ranya («SELECTED WORKS:»). Работы видны за пару секунд,
+> без наведения. Проблема «сетка-стена» решается НЕ возвратом к списку, а **курированием**:
+> на главной ~8–12 featured-работ (поле `Work.featured` + `getFeatured()`), полный архив —
+> глубже (путь заложен). Раскладка живая: первые 2 плитки крупные (верхний ряд), остальные
+> мельче 3-в-ряд; mobile — 1 колонка. Фильтры по-прежнему пере-раскладывают ту же сетку
+> in-place. Видео-плитки: маркер play; при наличии `Work.video` играют через `<VideoEmbed>`
+> in-place, иначе ведут на карточку. Старый `WorkIndex.tsx` + его CSS (`.index-row`,
+> `.floating-preview`) удалены. Текст ниже — исходное (index-first) решение, оставлен как история.
+
 - **Index-first, не grid-first.** Главная — типографический список работ (`Client, Title, Production`) с показом кадра по hover (desktop) / тапу (mobile). Сетка кадров — внутри карточки проекта. Это главный рычаг против «склада миниатюр».
 - **Курирование:** ~8–12 featured-работ на поверхности; полный архив — на клик глубже.
 - **Sticky-шапка:** имя слева · категории-фильтры в центре · Contact + живые часы справа. Фильтры пере-ранжируют тот же индекс in-place (без перезагрузки).
@@ -162,9 +175,32 @@ B. Zod-схема Work   C. Image-пайплайн      D. Дизайн-сист
 - [x] **C. Image-пайплайн:** `scripts/import-media.ts` (sharp 0.35 + heic-convert 2.1 + ffmpeg 8.1). Прогнан на `~/Downloads/Commercials`: **146 записей** (134 фото + 12 видео-постеров), responsive WebP/AVIF {400,800,1200,2000} + blur + `content/works.manifest.json` + кэш `.cache/media.json` (идемпотентность подтверждена: 3-й прогон 146/146 из кэша за 0.95с). `public/works/**` ≈ **89 МБ**. Маппинг папок→slug задокументирован.
 - [x] **D. Дизайн-система:** палитра rose/maroon editorial (paper `#fbf7f4`, rose `#f3d9d2`, maroon `#5c1d24`), шрифт **Fraunces** (next/font), `@theme`-токены в `globals.css`, примитивы `src/components/ui/` (`Container/Section/Hairline/Button/Typography`), демо-роут `/style-guide`. Mobile-first (body ≥16px, тач-таргеты).
 - [x] **E. Копирайт (EN):** `content/copy-en.md` — hero (3 варианта), bio (кратк./разверн.), 10 подписей `Client, Title, Production`, категории, микрокопия, contact-блок. **Частично:** факты Виктории (город, Production, email, агентство, видео-ссылки) помечены PLACEHOLDER — 13 вопросов к Виктории в конце файла.
-- [x] **F. Компоненты витрины:** sticky-шапка (имя · фильтры · CONTACT+живые часы) → marquee клиентов → **index-list с hover-кадром (desktop) / тап-кадром (mobile)** → карточка `/work/[slug]` (`generateStaticParams`, сетка + Final↔Process через `useState` + View Transitions API) → About/Contact. Острова в `src/components/site/`. Mobile-first чеклист пройден (один столбец, тач ≥44px, нет гориз. скролла, LCP priority, playsinline). `next build` зелёный, роуты пререндерятся.
+- [x] **F. Компоненты витрины:** sticky-шапка (имя · фильтры · CONTACT+живые часы) → marquee клиентов → ~~index-list с hover-кадром~~ **курируемая СЕТКА работ (grid-first, см. пересмотр выше)** → карточка `/work/[slug]` (`generateStaticParams`, сетка + Final↔Process через `useState` + View Transitions API) → About/Contact. Острова в `src/components/site/`. Mobile-first чеклист пройден (один столбец, тач ≥44px, нет гориз. скролла, LCP priority, playsinline). `next build` зелёный, роуты пререндерятся.
+- [x] **F2. Grid-first переделка главной (2026-06-17):** заменил index-list на видимую сетку.
+  - `src/components/site/WorkGrid.tsx` — новый клиент-остров: плитки (постер + подпись `WorkCaption`) на розовом поле, фильтр по `active` in-place, живая раскладка (2 крупные сверху / 3-в-ряд ниже / 1 кол. на mobile), play-маркер на видео-работах, анти-CLS (явный `aspect-ratio`, blur, первые 2 `priority`).
+  - Видео: при `Work.video` плитка = `<VideoEmbed>` (постер→тап→плеер) in-place; пока ссылок нет — ведёт на карточку, но с маркером play. Детект видео: `video` ИЛИ `kind==="video-poster"` (манифест C) ИЛИ категория `music-video`.
+  - Механика featured: поле `Work.featured` в Zod-схеме + `getFeatured(limit=12)` в `lib/works.ts` (если ничего не помечено — первые N по `order`; сейчас все 10 показываются). Путь «показать все» = `getWorks()`, заложен.
+  - `image.ts`/`ImageMeta` пробрасывают `kind`; `IndexEntry` получил `isVideo`/`video`.
+  - `Showcase` теперь рендерит `WorkGrid` на `tone="rose"`; About переведён на `tone="paper"` (чтобы два розовых блока не сливались). Ритм: hero(paper) → marquee → сетка(rose) → About(paper) → Contact(rose-gradient).
+  - Удалены: `WorkIndex.tsx` и мёртвый CSS (`.index-row*`, `.floating-preview`, `@keyframes preview-in`).
+  - `next build` зелёный; `/` рендерит все 10 кадров, 3 play-маркера (delta, highsnobiety, tommy-cash), сетка 1 колонка на mobile.
 - [x] **G. `<VideoEmbed>`-фасад:** `src/components/VideoEmbed.tsx` + `video/parse.ts` — facade-паттерн (постер → по тапу iframe), `provider=youtube|vimeo|mp4` (автодетект из URL), youtube-nocookie / vimeo dnt / mp4 preload=none, aspect-ratio-бокс (нет CLS), playsinline, тач-таргет 64px.
-- [~] **H. Наполнение** 🔒 **ЧАСТИЧНО разблокирована (2026-06-17 Виктория дала факты о себе):** ✅ закрыто и внесено в код/копирайт — имя **VIKTORIA MARTJANOVA**, Tallinn, ~10 лет, роль, email/Instagram/IMDb (живые ссылки в Contact), таксономия категорий финализирована (`commercial, music-video, editorial, film, theater, art`), Delta = Delta Air Lines, Tommy Cash = music video. **Осталось от Виктории:** Title для 6 проектов, Production по всем 10, видео-ссылки Vimeo/YouTube, агентство, полный список клиентов, портрет (`assets/portrait/`). Инфраструктура готова: деривативы C в `public/works/<slug>/`, схема B принимает реальные имена, F рендерит реальные кадры как только фикстуры заменят на manifest-имена.
+- [~] **H. Наполнение** 🔒 **ЧАСТИЧНО разблокирована (2026-06-17 Виктория дала факты о себе):** ✅ закрыто и внесено в код/копирайт — имя **VIKTORIA MARTJANOVA**, Tallinn, ~10 лет, роль, email/Instagram/IMDb (живые ссылки в Contact), таксономия категорий финализирована (`commercial, music-video, editorial, film, theater, art`), Delta = Delta Air Lines, Tommy Cash = music video.
+- [~] **H2. Съёмочная группа + 2 новых проекта (2026-06-17, из `Commercials/New Info`):** Виктория прислала info-документы (режиссёр/оператор/продакшн/агентство/роль) по всем направлениям + медиа двух новых работ.
+  - **Схема B расширена:** добавлены `role` (роль Виктории) и `credits {director, dop, productionDesigner?, agency?, starring?}`; `title` ослаблен до `default("")` (для роликов без отдельного названия карточка показывает клиента, подпись опускает строку title). Поля автоматически проходят через `ResolvedWork`.
+  - **Метаданные внесены во все 10 существующих работ:** Production-компании + роль + кредиты (напр. Delta — Art Director, PD Arthur de Borman, dir Anna Himma, W+K; Lascana — Serviceplan, starring Victoria Swarovski; Victorinox — Publicis Zürich; Jameson — Cuba Films · Renegade Berlin; Tommy Eurovision — Props, dir Alina Pasok).
+  - **2 новых проекта добавлены** (прогнаны через `import-media.ts`, +11 деривативов, манифест 146→157): `tommy-lotto` (Tommy Cash × Eesti Loto, Wedia, dir Dima Dobrovolskis) и `bolt-caromatherapy` (Caromathérapy by Bolt, Wedia, dir Esko Bros). Источники скопированы в `~/Downloads/Commercials/{Tommy Lotto, Bolt Caromatherapy}`. **Итого 12 работ.**
+  - **Карточка проекта** (`work/[slug]/page.tsx`) рендерит блок кредитов (`<dl>` Role/Director/DOP/Production Design/Agency/Starring/Production — только заполненные строки); placeholder `[PRODUCTION — TBC]` убран.
+  - **Пустые архивы** «Tommy pregnant» и «Tommy Cash x Maison Margiela» (zip без содержимого) — пропущены, медиа нет.
+  - `next build` зелёный (13 роутов /work/*), существующие 89 МБ деривативов не тронуты (кэш).
+  - **Видео-ссылки (2026-06-17, Виктория прислала 7):** внесены в `video` для `highsnobiety-x-jameson, tommy-lotto, lascana, victorinox, adidas (YT), bmw-f74, bolt-interview (YT)`. Хранятся чистыми URL (парсер игнорит query). Эти плитки теперь играют in-place на гриде + плеер на карточке. Bolt-ссылку (YT) разрешил по заголовку видео → «Reverse Interview» = `bolt-interview`.
+  - **Агентство-представитель — решено НЕ добавлять (2026-06-17, Дмитрий):** строка `AGENCY` удалена из секции Contact (`page.tsx`). Contact теперь = Email · Instagram · IMDb. _(Per-project agency-кредиты Serviceplan/Publicis Zürich в карточках — это реальные продакшн-кредиты из документов Виктории, оставлены.)_
+  - **Осталось от Виктории:** видео-ссылки для остальных 5 работ (`bolt-whatever-you-do, bolt-caromatherapy, delta, tele-2, tommy-cash-eurovisioon`), полный список клиентов, портрет (`assets/portrait/`).
+- [x] **F3. Правки витрины (2026-06-17, Дмитрий):**
+  - **Видео muted по умолчанию.** Все встроенные плееры играли со звуком (и при тапе по нескольким — одновременно, какофония). В `video/parse.ts` `buildEmbedSrc` добавлены `mute=1` (YouTube) / `muted=1` (Vimeo); в `VideoFacade.client.tsx` нативному `<video>` (mp4) добавлен `muted`. Звук включается из контролов плеера по желанию зрителя.
+  - **Ровная сетка.** Прежняя раскладка (2 крупные сверху + 3-в-ряд) при 12 работах оставляла «сироту» в последнем ряду. `WorkGrid.tsx`: новый ритм-мозаика на 6-кол lg-гриде — цикл из 5 плиток (ряд из 2 крупных `span-3` + ряд из 3 средних `span-2`), каждый ряд заполняет все 6 колонок (`isWide(i) = i % 5 < 2`). Крупные плитки `aspect-[3/2]` на lg, на sm/mobile всё к `4/3` для ровной высоты. sm — чистый 2-up, mobile — 1 колонка.
+  - **Кастомный курсор** (`CustomCursor.client.tsx` + стили в `globals.css`): бордовая точка 1:1 + трейлинг-кольцо с easing, кольцо растёт / точка гаснет над кликабельным (`a, button, …`). Только pointer-fine (desktop), уважает `prefers-reduced-motion` (кольцо без трейла), нативный курсор скрыт только пока остров активен (`.has-custom-cursor`). Смонтирован в `layout.tsx`.
+  - `npx tsc --noEmit` чисто, `next build` зелёный (17 страниц).
 - [ ] **I. Деплой** 🔒 **ЗАБЛОКИРОВАНА — после H:** GitHub → Railway (standalone, без volume), домен, проверка mobile/desktop.
 - [ ] **J. QA** 🔒 **ЗАБЛОКИРОВАНА — после I:** сквозной mobile-first-чеклист на реальном iPhone/Android + Lighthouse (mobile), CLS, проверка ссылок.
 

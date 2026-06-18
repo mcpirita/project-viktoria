@@ -1,8 +1,13 @@
 {
   "title": "Whatever You're Doing, There's a Bolt for That",
   "client": "Bolt",
-  "production": "",
+  "production": "Wedia",
   "category": "commercial",
+  "role": "Production Designer",
+  "credits": {
+    "director": "Juri Belov",
+    "dop": "Jevgeni Bystrov"
+  },
   "order": 1,
   "final": [
     "screenshot-2026-03-15-at-17-28-43",

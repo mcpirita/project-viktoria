@@ -63,7 +63,7 @@
   --text-2xl--line-height: 1.12;
   --text-3xl: clamp(2.25rem, 1.2rem + 5vw, 4rem);        /* large display   */
   --text-3xl--line-height: 1.05;
-  --text-hero: clamp(2.75rem, 1rem + 9vw, 7.5rem);       /* hero name       */
+  --text-hero: clamp(2.5rem, 1rem + 7vw, 6rem);          /* hero name       */
   --text-hero--line-height: 0.95;
 
   /* Tracking (letter-spacing) — wide tracking is the signature.           */
@@ -272,39 +272,6 @@
   }
 }
 
-/* ---- Index row hover affordance — subtle warm wash + nudge of the caption. */
-.index-row {
-  position: relative;
-  text-decoration: none;
-  transition: background-color 0.35s var(--ease-editorial);
-}
-@media (hover: hover) {
-  .index-row:hover {
-    background-color: var(--color-paper-deep);
-  }
-  .index-row:hover .index-row__caption {
-    transform: translateX(6px);
-  }
-}
-.index-row__caption {
-  transition: transform 0.4s var(--ease-editorial);
-}
-
-/* ---- Floating cursor-preview entrance (desktop only). */
-.floating-preview {
-  animation: preview-in 0.28s var(--ease-editorial) both;
-}
-@keyframes preview-in {
-  from {
-    opacity: 0;
-    transform: scale(0.97);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
 /* ---- Final ↔ Process: cross-fade via the View Transitions API. */
 ::view-transition-old(gallery),
 ::view-transition-new(gallery) {
@@ -316,7 +283,55 @@
   .marquee__track {
     animation: none;
   }
-  .floating-preview {
-    animation: none;
-  }
+}
+
+/* ---- Custom cursor (desktop only) — maroon dot + trailing ring.
+ * Mounted by CustomCursor.client; it adds `.has-custom-cursor` to <html> only
+ * on fine-pointer devices, so the native cursor is hidden ONLY when ours runs. */
+.has-custom-cursor,
+.has-custom-cursor * {
+  cursor: none !important;
+}
+
+.cursor-ring,
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform;
+}
+
+/* Trailing hollow ring — eases toward the pointer, grows over clickables. */
+.cursor-ring {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--color-maroon);
+  border-radius: 9999px;
+  transition:
+    width 0.25s var(--ease-editorial),
+    height 0.25s var(--ease-editorial),
+    background-color 0.25s var(--ease-editorial),
+    border-color 0.25s var(--ease-editorial),
+    opacity 0.3s var(--ease-editorial);
+}
+.cursor-ring--grow {
+  width: 3.25rem;
+  height: 3.25rem;
+  background-color: color-mix(in srgb, var(--color-maroon) 14%, transparent);
+  border-color: var(--color-maroon-soft);
+}
+
+/* Precise filled dot — tracks the pointer 1:1, fades out over clickables. */
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-maroon);
+  border-radius: 9999px;
+  transition: opacity 0.2s var(--ease-editorial);
+}
+.cursor-dot--hidden {
+  opacity: 0 !important;
 }

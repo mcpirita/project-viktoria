@@ -1,8 +1,15 @@
 {
   "title": "Aroma / Coffee / Smooth",
   "client": "Jameson × Highsnobiety",
-  "production": "",
+  "production": "Cuba Films · Renegade Berlin",
   "category": "commercial",
+  "role": "Production Designer (EST)",
+  "credits": {
+    "director": "Dan French",
+    "dop": "Ben Cotgrove",
+    "productionDesigner": "Julija Fricsone Gavriss"
+  },
+  "video": "https://vimeo.com/1145256259",
   "order": 2,
   "final": [
     "jameson-aroma-v1-poster",

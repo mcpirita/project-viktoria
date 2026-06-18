@@ -42,6 +42,9 @@ export function VideoFacade({ parsed, label, posterSrc }: VideoFacadeProps) {
           poster={posterSrc}
           // autoPlay because the user already expressed intent by tapping.
           autoPlay
+          // muted by default — tiles sit side-by-side, so playback must not
+          // blast sound; the viewer un-mutes from the controls when they want it.
+          muted
           controls
           playsInline
           preload="auto"

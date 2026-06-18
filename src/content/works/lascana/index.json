@@ -1,8 +1,16 @@
 {
-  "title": "Untitled",
+  "title": "",
   "client": "Lascana",
-  "production": "",
+  "production": "Münchhausen",
   "category": "commercial",
+  "role": "Production Designer",
+  "credits": {
+    "director": "Lauro Cress",
+    "dop": "Julian Jonas Schmitt",
+    "agency": "Serviceplan",
+    "starring": "Victoria Swarovski"
+  },
+  "video": "https://vimeo.com/865877121",
   "order": 5,
   "final": [
     "low-quality-screenshot-2026-03-13-at-15-29-54",

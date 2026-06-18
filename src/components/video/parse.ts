@@ -126,8 +126,12 @@ export function parseVideo(src: string, provider?: VideoProvider): ParsedVideo {
  * Only meaningful for youtube/vimeo (mp4 uses a native <video>).
  *
  * - YouTube → youtube-nocookie.com (no cookies until playback), `rel=0`,
- *   `playsinline=1`, `autoplay=1`. GDPR-clean.
- * - Vimeo   → `dnt=1` (do-not-track), `playsinline=1`, `autoplay=1`.
+ *   `playsinline=1`, `autoplay=1`, `mute=1`. GDPR-clean.
+ * - Vimeo   → `dnt=1` (do-not-track), `playsinline=1`, `autoplay=1`, `muted=1`.
+ *
+ * Muted by default: tiles sit side-by-side in the grid, so a tapped video must
+ * not blast sound (and several tapped at once would otherwise overlap). The
+ * viewer un-mutes from the player's own controls when they want audio.
  */
 export function buildEmbedSrc(parsed: ParsedVideo): string {
   if (parsed.provider === "youtube") {
@@ -135,6 +139,7 @@ export function buildEmbedSrc(parsed: ParsedVideo): string {
       rel: "0",
       playsinline: "1",
       autoplay: "1",
+      mute: "1",
     });
     return `https://www.youtube-nocookie.com/embed/${encodeURIComponent(parsed.id)}?${params}`;
   }
@@ -143,6 +148,7 @@ export function buildEmbedSrc(parsed: ParsedVideo): string {
       dnt: "1",
       playsinline: "1",
       autoplay: "1",
+      muted: "1",
     });
     return `https://player.vimeo.com/video/${encodeURIComponent(parsed.id)}?${params}`;
   }

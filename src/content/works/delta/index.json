@@ -1,8 +1,14 @@
 {
-  "title": "Untitled",
+  "title": "",
   "client": "Delta Air Lines",
-  "production": "",
+  "production": "Münchhausen · Wieden+Kennedy",
   "category": "commercial",
+  "role": "Art Director",
+  "credits": {
+    "director": "Anna Himma",
+    "dop": "Arnaud Potier",
+    "productionDesigner": "Arthur de Borman"
+  },
   "order": 7,
   "final": [
     "low-quality-img-9469-poster",

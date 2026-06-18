@@ -56,6 +56,17 @@ export default async function WorkPage({
   // Poster for the video: Victoria's own first frame, if we have a resolved one.
   const poster = firstRenderable(slug, work.final.length ? work.final : work.process);
 
+  // Crew credits — only the rows Victoria actually provided render.
+  const credits: { label: string; value: string }[] = [
+    { label: "Role", value: work.role },
+    { label: "Director", value: work.credits.director ?? "" },
+    { label: "DOP", value: work.credits.dop ?? "" },
+    { label: "Production Design", value: work.credits.productionDesigner ?? "" },
+    { label: "Agency", value: work.credits.agency ?? "" },
+    { label: "Starring", value: work.credits.starring ?? "" },
+    { label: "Production", value: work.production },
+  ].filter((row) => row.value.trim().length > 0);
+
   return (
     <main id="top">
       {/* ---- Slim header bar — back to index ----------------------------- */}
@@ -83,13 +94,28 @@ export default async function WorkPage({
             client={work.client.toUpperCase()}
             title={work.title ? work.title.toUpperCase() : undefined}
             production={
-              work.production
-                ? work.production.toUpperCase()
-                : "[PRODUCTION — TBC]"
+              work.production ? work.production.toUpperCase() : undefined
             }
             className="text-[length:--text-sm]"
           />
         </div>
+
+        {/* ---- Crew credits (Phase H) ----------------------------------- */}
+        {credits.length > 0 && (
+          <dl className="mt-10 grid max-w-2xl grid-cols-1 gap-x-12 gap-y-4 sm:grid-cols-2">
+            {credits.map((row) => (
+              <div
+                key={row.label}
+                className="flex items-baseline justify-between gap-6 border-b border-[--color-line-rose] pb-2.5"
+              >
+                <dt className="label-eyebrow">{row.label}</dt>
+                <dd className="text-right font-serif text-[length:--text-sm] tracking-[--tracking-wide] text-[--color-maroon]">
+                  {row.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        )}
       </Section>
 
       {/* ---- Video (if any) ---------------------------------------------- */}

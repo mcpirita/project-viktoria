@@ -1,8 +1,14 @@
 {
   "title": "F74",
   "client": "BMW",
-  "production": "",
+  "production": "Nafta · Stentang Film",
   "category": "commercial",
+  "role": "Production Designer",
+  "credits": {
+    "director": "India Harris",
+    "dop": "Konstantin Mazov"
+  },
+  "video": "https://vimeo.com/1050048934",
   "order": 8,
   "final": [
     "low-quality-screenshot-2026-03-13-at-18-19-55",

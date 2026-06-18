@@ -203,6 +203,19 @@ export async function getWorks(): Promise<ResolvedWork[]> {
   return loadAllWorks();
 }
 
+/**
+ * Курируемая выборка для grid-first главной. Возвращает работы с `featured: true`
+ * в порядке `order`; если ни одна не помечена — первые `limit` работ по `order`
+ * (разумный дефолт, чтобы главная не была пустой и не превращалась в «стену»).
+ * Полный архив (все работы) остаётся за `getWorks()` — путь под «показать все».
+ */
+export async function getFeatured(limit = 12): Promise<ResolvedWork[]> {
+  "use cache";
+  const works = await loadAllWorks();
+  const picked = works.filter((w) => w.featured);
+  return (picked.length ? picked : works).slice(0, limit);
+}
+
 /** Одна работа по slug, либо undefined. */
 export async function getWork(slug: string): Promise<ResolvedWork | undefined> {
   "use cache";

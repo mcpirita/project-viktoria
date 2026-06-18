@@ -1,8 +1,13 @@
 {
   "title": "#ScreenFreeHolidays",
   "client": "Tele2",
-  "production": "",
+  "production": "Wedia",
   "category": "commercial",
+  "role": "Production Designer",
+  "credits": {
+    "dop": "Ben Cotgrove"
+  },
+  "video": "https://vimeo.com/1041093666",
   "order": 3,
   "final": [
     "screenshot-2026-03-15-at-17-10-21",

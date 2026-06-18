@@ -49,14 +49,44 @@ export type Category = z.infer<typeof categorySchema>;
 const imageRefSchema = z.string().min(1);
 
 export const workSchema = z.object({
-  /** Заголовок работы. Используется как fallback для slug. */
-  title: z.string().min(1),
+  /**
+   * Заголовок/название спота. Может быть пустым: для рекламных роликов без
+   * отдельного имени карточка показывает клиента (Display = title || client),
+   * а подпись на сайте просто опускает строку title.
+   */
+  title: z.string().default(""),
   /** Бренд/заказчик (подпись на сайте: Client, Title, Production). */
   client: z.string().min(1),
   /** Продакшн/агентство. Может быть пустым, пока Виктория не уточнила. */
   production: z.string().default(""),
   /** Категория-фильтр (enum, не роут). */
   category: categorySchema,
+  /**
+   * Роль Виктории на проекте (Production Designer / Art Director / Props…).
+   * Источник — info-документы Виктории. Пустая строка = не указано.
+   */
+  role: z.string().default(""),
+  /**
+   * Съёмочная группа и партнёры — выводятся блоком кредитов в карточке проекта.
+   * Все поля опциональны: показываем только заполненные строки.
+   */
+  credits: z
+    .object({
+      director: z.string().optional(),
+      dop: z.string().optional(),
+      /** Production Designer, если им был НЕ Виктория (тогда у неё другая роль). */
+      productionDesigner: z.string().optional(),
+      agency: z.string().optional(),
+      starring: z.string().optional(),
+    })
+    .default({}),
+  /**
+   * Обложка работы для сетки на главной — имя одного кадра из `final`/`process`
+   * (то же базовое имя, что в массивах). Если не задана — берётся первый
+   * рендерящийся кадр (см. lib/works.ts / pickCover). Так Виктория/Дмитрий
+   * выбирают «главное» фото проекта, не завися от порядка файлов.
+   */
+  cover: imageRefSchema.optional(),
   /** Финальные кадры — имена изображений в public/works/<slug>/. */
   final: z.array(imageRefSchema).default([]),
   /** Backstage / process-кадры — имена изображений там же. */
@@ -65,6 +95,13 @@ export const workSchema = z.object({
   video: z.url().optional(),
   /** Порядок вывода: меньше = выше. */
   order: z.number().int().default(0),
+  /**
+   * Курирование главной (grid-first). `true` — работа попадает в избранную
+   * сетку на главной. Если ни одна работа не помечена — главная показывает
+   * первые N по `order` (см. lib/works.ts → getFeatured). Полный архив —
+   * отдельным путём (Фаза 2+).
+   */
+  featured: z.boolean().default(false),
   /** Slug работы. Если не задан — берётся имя папки / строится из title. */
   slug: z
     .string()
@@ -86,6 +123,12 @@ export type ImageMeta = {
   blurDataURL: string;
   /** Доступные ширины деривативов (например [400, 800, 1200, 2000]). */
   widths: number[];
+  /**
+   * Тип кадра из манифеста фазы C: обычное фото или постер видео-работы.
+   * Грид на главной по нему ставит маркер воспроизведения. Опционально —
+   * старые манифесты могут не содержать поля.
+   */
+  kind?: "image" | "video-poster";
 };
 
 /** Обогащённое изображение: ссылка + (опционально) метаданные из манифеста. */

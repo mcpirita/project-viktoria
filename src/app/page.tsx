@@ -7,19 +7,19 @@ import {
   MicroLabel,
   Section,
 } from "@/components/ui";
-import { getWorks, getCategories } from "@/lib/works";
-import { firstRenderable } from "@/components/site/image";
+import { getFeatured, getCategories } from "@/lib/works";
+import { pickCover } from "@/components/site/image";
 import { Showcase } from "@/components/site/Showcase";
 import { Marquee } from "@/components/site/Marquee";
 import { LiveClock } from "@/components/site/LiveClock";
 import type { IndexEntry } from "@/components/site/types";
 
 /**
- * Live home page (Phase F). Server component: pulls works + categories from the
- * data layer (B), resolves each row's preview frame once (C manifest), and hands
- * a lean `IndexEntry[]` to the `Showcase` client island (sticky header filters +
- * index list with hover/tap preview). Hero, marquee, about and contact stay
- * server-rendered around the island.
+ * Live home page (grid-first). Server component: pulls the curated featured works
+ * + categories from the data layer (B), resolves each tile's poster frame once
+ * (C manifest), and hands a lean `IndexEntry[]` to the `Showcase` client island
+ * (sticky header filters + the visible work grid). Hero, marquee, about and
+ * contact stay server-rendered around the island.
  *
  * Copy comes from content/copy-en.md; missing facts (production, city, contacts)
  * render as honest placeholders for Phase H.
@@ -30,44 +30,68 @@ const CLIENTS = [
   "ADIDAS",
   "BMW",
   "BOLT",
-  "DELTA",
+  "VOLKSWAGEN",
+  "DELTA AIRLINES",
+  "JÄGERMEISTER",
   "JAMESON",
   "HIGHSNOBIETY",
   "LASCANA",
   "TELE2",
   "TOMMY CASH",
   "VICTORINOX",
+  "SOMAT",
+  "EBAY",
+  "BOSCH",
+  "LG",
+  "LIDL",
+  "EDEKA",
+  "MAISON MARGIELA",
+  "NUTELLA",
+  "TALLINK",
+  "LHV",
+  "SEB",
+  "COCA-COLA",
+  "RACER WORLDWIDE",
 ];
 
 export default async function Home() {
   const [works, categories] = await Promise.all([
-    getWorks(),
+    getFeatured(),
     getCategories(),
   ]);
 
-  const entries: IndexEntry[] = works.map((w) => ({
-    slug: w.slug,
-    client: w.client.toUpperCase(),
-    title: w.title ? w.title.toUpperCase() : undefined,
-    production: w.production ? w.production.toUpperCase() : undefined,
-    category: w.category,
-    preview: firstRenderable(w.slug, w.final.length ? w.final : w.process),
-  }));
+  const entries: IndexEntry[] = works.map((w) => {
+    const preview = pickCover(w.slug, w.cover, w.final, w.process);
+    return {
+      slug: w.slug,
+      client: w.client.toUpperCase(),
+      title: w.title ? w.title.toUpperCase() : undefined,
+      production: w.production ? w.production.toUpperCase() : undefined,
+      category: w.category,
+      preview,
+      // Video work: real link, a video-poster frame, or a moving-image category.
+      isVideo:
+        Boolean(w.video) ||
+        preview?.kind === "video-poster" ||
+        w.category === "music-video",
+      video: w.video,
+    };
+  });
 
   return (
     <main id="top">
       {/* ---- Hero (server) ----------------------------------------------- */}
       <Section
         tone="paper"
-        className="flex min-h-[78vh] flex-col"
+        className="flex min-h-[56vh] flex-col sm:min-h-[60vh]"
       >
         <div className="flex items-center justify-between">
           <MicroLabel>PORTFOLIO — ART DEPARTMENT</MicroLabel>
           <LiveClock />
         </div>
 
-        <div className="mt-[clamp(2rem,7vh,4rem)]">
-          <Eyebrow className="mb-5">VIKTORIA MARTJANOVA</Eyebrow>
+        <div className="mt-[clamp(1.25rem,4vh,2.25rem)]">
+          <Eyebrow className="mb-4">VIKTORIA MARTJANOVA</Eyebrow>
           <h1 className="font-serif text-[length:--text-hero] font-light uppercase leading-[--text-hero--line-height] tracking-[--tracking-tightest] text-[--color-maroon-deep]">
             <span className="block">Costume,</span>
             <span className="block">Set &amp; Props,</span>
@@ -75,10 +99,10 @@ export default async function Home() {
               Production Design
             </span>
           </h1>
-          <p className="mt-7 max-w-[40ch] font-serif text-[length:--text-lg] uppercase tracking-[--tracking-wide] text-[--color-maroon-soft]">
+          <p className="mt-6 max-w-[40ch] font-serif text-[length:--text-lg] uppercase tracking-[--tracking-wide] text-[--color-maroon-soft]">
             Art department for film &amp; advertising
           </p>
-          <div className="mt-9 flex flex-wrap gap-4">
+          <div className="mt-8 flex flex-wrap gap-4">
             <Button href="#works">Selected Works</Button>
             <Button href="#contact" variant="text">
               Contact
@@ -86,7 +110,7 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="mt-auto pt-[clamp(2.5rem,7vh,5rem)]">
+        <div className="mt-auto pt-[clamp(1.75rem,4vh,3rem)]">
           <Marquee items={CLIENTS} />
         </div>
       </Section>
@@ -94,8 +118,8 @@ export default async function Home() {
       {/* ---- Sticky header + index list (client island) ------------------ */}
       <Showcase entries={entries} categories={categories} />
 
-      {/* ---- About (rose field, server) ---------------------------------- */}
-      <Section id="about" tone="rose">
+      {/* ---- About (paper, server) — alternates off the rose works field -- */}
+      <Section id="about" tone="paper">
         <div className="grid grid-cols-1 gap-x-12 gap-y-10 lg:grid-cols-[minmax(0,22rem)_1fr]">
           {/* portrait — square crop, тестовый вариант (assets/portrait/IMG_5470.JPG) */}
           <Image
@@ -153,7 +177,6 @@ export default async function Home() {
               v: "imdb.com/name/nm11979739",
               href: "https://www.imdb.com/name/nm11979739/",
             },
-            { k: "AGENCY", v: "[agency — TBC]", href: undefined },
           ].map((row) => (
             <div
               key={row.k}

@@ -22,6 +22,8 @@ export type RenderableImage = {
   height: number;
   aspectRatio: number;
   blurDataURL?: string;
+  /** "video-poster" → грид показывает маркер воспроизведения. */
+  kind?: "image" | "video-poster";
 };
 
 /**
@@ -50,6 +52,7 @@ export function toRenderable(
     height: meta.height,
     aspectRatio: meta.aspectRatio || meta.width / meta.height || 4 / 3,
     blurDataURL: meta.blurDataURL,
+    kind: meta.kind,
   };
 }
 
@@ -63,4 +66,33 @@ export function firstRenderable(
     if (r) return r;
   }
   return null;
+}
+
+/** Strip a size/extension suffix so cover refs match regardless of how written. */
+function normalizeRef(ref: string): string {
+  return ref.replace(/\.(jpe?g|png|webp|avif|heic|tiff?)$/i, "");
+}
+
+/**
+ * Resolve the grid cover for a work. When `cover` names a frame present in
+ * `final`/`process`, that frame is used; otherwise we fall back to the first
+ * renderable frame (final-first, then process). Lets the content choose the
+ * "main" photo of a project independently of file order.
+ */
+export function pickCover(
+  slug: string,
+  cover: string | undefined,
+  final: ResolvedImage[],
+  process: ResolvedImage[],
+): RenderableImage | null {
+  if (cover) {
+    const want = normalizeRef(cover);
+    const match = [...final, ...process].find(
+      (img) => normalizeRef(img.ref) === want,
+    );
+    const resolved = match && toRenderable(slug, match);
+    if (resolved) return resolved;
+    // cover задан, но кадр не найден/не обработан — мягко падаем на первый.
+  }
+  return firstRenderable(slug, final.length ? final : process);
 }
