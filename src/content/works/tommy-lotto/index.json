@@ -5,13 +5,19 @@
   "category": "commercial",
   "role": "Production Designer",
   "credits": {
-    "director": "Dima Dobrovolskis",
-    "dop": "Martin Venela"
+    "director": "Alina Pasok",
+    "producer": "Kirill Volkov",
+    "dop": "Tristan Luige"
   },
   "video": "https://vimeo.com/1117248055",
   "order": 7,
   "final": [
-    "use-this-img-7366"
+    "use-this-img-7366",
+    "use-this-img-7365",
+    "lotto-red-suit-still"
   ],
-  "process": []
+  "process": [
+    "use-this-img-7264",
+    "use-this-img-7279"
+  ]
 }

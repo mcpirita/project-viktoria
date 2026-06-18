@@ -2371,6 +2371,89 @@
       "works/tommy-lotto/loop-480.mp4"
     ]
   },
+  "works/tommy-lotto/lotto-red-suit-still": {
+    "width": 1080,
+    "height": 719,
+    "aspectRatio": 1.5021,
+    "blurDataURL": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADQAwCdASoUAA0APu1iqU2ppaOiMAgBMB2JQBWAA9X2U8ZXcEHenZwAyUfMU1lxuG2TZwjymYW8I7+CGgCCav3i95MyYqW+ExBxiwDmWtEAAA==",
+    "widths": [
+      400,
+      800
+    ],
+    "kind": "image",
+    "files": [
+      "works/tommy-lotto/lotto-red-suit-still-400.webp",
+      "works/tommy-lotto/lotto-red-suit-still-400.avif",
+      "works/tommy-lotto/lotto-red-suit-still-800.webp",
+      "works/tommy-lotto/lotto-red-suit-still-800.avif"
+    ]
+  },
+  "works/tommy-lotto/use-this-img-7264": {
+    "width": 2268,
+    "height": 4032,
+    "aspectRatio": 0.5625,
+    "blurDataURL": "data:image/webp;base64,UklGRgoBAABXRUJQVlA4IP4AAACwBgCdASoUACQAPu1qqVGppaOiqrgKATAdiUAYdYRGM4+fuUDYTc6wsOpp6QhyQ2oJKPgXjrf9WTURnVx2oAD+aBd8d2Yfz0LEnKjRz2b0b4pp4h1XofnMC7CJr6jRIShvVNiqK5CnzEwkUrZ3/j3Vptp6u49MqeBtWNS/FhJdpvWYpYd910s52bnqhWvwDkp3EPButO7Oy2Nq0doI5y9xNbmvt5wizECCI6RBf013je+ebL/fOpw7674e3+NAIRJ74wAJAjLiCCCcnZvfRydm/3iyTwt6ezCPSZCqee2sywszysRWznYiqqu54mIfPWvo3MeVzJy8n1k/jXBgAA==",
+    "widths": [
+      400,
+      800,
+      1200,
+      2000
+    ],
+    "kind": "image",
+    "files": [
+      "works/tommy-lotto/use-this-img-7264-400.webp",
+      "works/tommy-lotto/use-this-img-7264-400.avif",
+      "works/tommy-lotto/use-this-img-7264-800.webp",
+      "works/tommy-lotto/use-this-img-7264-800.avif",
+      "works/tommy-lotto/use-this-img-7264-1200.webp",
+      "works/tommy-lotto/use-this-img-7264-1200.avif",
+      "works/tommy-lotto/use-this-img-7264-2000.webp",
+      "works/tommy-lotto/use-this-img-7264-2000.avif"
+    ]
+  },
+  "works/tommy-lotto/use-this-img-7279": {
+    "width": 2268,
+    "height": 4032,
+    "aspectRatio": 0.5625,
+    "blurDataURL": "data:image/webp;base64,UklGRuYAAABXRUJQVlA4INoAAADwBQCdASoUACQAPu1wsVKppiSipWmZMB2JZQDLpCMlwoQrWeQaS4Z4n9sM/3iPykr9vC+8uyLtAAD+79IJKV03f+bv+3zQl27X9SnBWe6X8OmiWGqFEl/xNjghNkqtAZ9MGdwZK/T/EzHh+yF+FOwT/BYfcsjPDUk8ljj9y0S0hucAkn2LLWW78XvglRgS/XtPpNEt4D06vUyR8L+1FF96XV97wB7hjlecqhOb2o1WeeW1gKVot7TaIKFLRA1+q84N+QYHHxJxvOlHXmGzF6E8r4E7yhXZAAAAAA==",
+    "widths": [
+      400,
+      800,
+      1200,
+      2000
+    ],
+    "kind": "image",
+    "files": [
+      "works/tommy-lotto/use-this-img-7279-400.webp",
+      "works/tommy-lotto/use-this-img-7279-400.avif",
+      "works/tommy-lotto/use-this-img-7279-800.webp",
+      "works/tommy-lotto/use-this-img-7279-800.avif",
+      "works/tommy-lotto/use-this-img-7279-1200.webp",
+      "works/tommy-lotto/use-this-img-7279-1200.avif",
+      "works/tommy-lotto/use-this-img-7279-2000.webp",
+      "works/tommy-lotto/use-this-img-7279-2000.avif"
+    ]
+  },
+  "works/tommy-lotto/use-this-img-7365": {
+    "width": 1920,
+    "height": 1080,
+    "aspectRatio": 1.7778,
+    "blurDataURL": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAAAwBACdASoUAAsAPu1iqU2ppaOiMAgBMB2JZgCdMoADE3fbtChePOik0oAAzTLIAiQXV5TkvDImuiOKkrlV4uc87yQ5xgTXerVozNsY99fVpCyZ/uqtWXzUJMywAvKScYAAAA==",
+    "widths": [
+      400,
+      800,
+      1200
+    ],
+    "kind": "image",
+    "files": [
+      "works/tommy-lotto/use-this-img-7365-400.webp",
+      "works/tommy-lotto/use-this-img-7365-400.avif",
+      "works/tommy-lotto/use-this-img-7365-800.webp",
+      "works/tommy-lotto/use-this-img-7365-800.avif",
+      "works/tommy-lotto/use-this-img-7365-1200.webp",
+      "works/tommy-lotto/use-this-img-7365-1200.avif"
+    ]
+  },
   "works/tommy-lotto/use-this-img-7366": {
     "width": 1920,
     "height": 1080,
