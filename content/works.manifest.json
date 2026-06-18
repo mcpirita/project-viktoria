@@ -2481,5 +2481,28 @@
       "works/victorinox/process-img-8438-2000.webp",
       "works/victorinox/process-img-8438-2000.avif"
     ]
+  },
+  "works/yale-smart-locks/screenshot-2026-06-18-at-22-15-33": {
+    "width": 3024,
+    "height": 1704,
+    "aspectRatio": 1.7746,
+    "blurDataURL": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAABQBACdASoUAAsAPu1kqk4ppaQiMAgBMB2JagCdMoADSeHahtrzo+kmoUhAAP7s1UHYTVx9cT1+jyrSEPsRut4j7n1JfOIXFd0Z/S5XbZTMzFAewFTR4WBcB29Vi4Ba+RQ6df2iovutoBAA",
+    "widths": [
+      400,
+      800,
+      1200,
+      2000
+    ],
+    "kind": "image",
+    "files": [
+      "works/yale-smart-locks/screenshot-2026-06-18-at-22-15-33-400.webp",
+      "works/yale-smart-locks/screenshot-2026-06-18-at-22-15-33-400.avif",
+      "works/yale-smart-locks/screenshot-2026-06-18-at-22-15-33-800.webp",
+      "works/yale-smart-locks/screenshot-2026-06-18-at-22-15-33-800.avif",
+      "works/yale-smart-locks/screenshot-2026-06-18-at-22-15-33-1200.webp",
+      "works/yale-smart-locks/screenshot-2026-06-18-at-22-15-33-1200.avif",
+      "works/yale-smart-locks/screenshot-2026-06-18-at-22-15-33-2000.webp",
+      "works/yale-smart-locks/screenshot-2026-06-18-at-22-15-33-2000.avif"
+    ]
   }
 }
