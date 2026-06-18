@@ -155,3 +155,46 @@ export function buildEmbedSrc(parsed: ParsedVideo): string {
   // mp4 — the id *is* the file URL.
   return parsed.id;
 }
+
+/**
+ * Build a **background** iframe `src` — silent, looping, chrome-less autoplay for
+ * the grid tiles (Phase H, 2026-06-18). Unlike `buildEmbedSrc` (a tapped player
+ * with controls), this hides ALL UI so a video tile reads as living motion, not
+ * an embedded player. The tile itself stays clickable (the iframe is
+ * pointer-events:none) and opens the full work card on tap.
+ *
+ * - Vimeo  → `background=1` (Vimeo's purpose-built mode: autoplay, loop, muted,
+ *   no controls/title/byline) + `dnt=1`.
+ * - YouTube → no native background flag, so we assemble it: `autoplay+mute+loop`
+ *   (loop needs `playlist=<id>`), `controls=0`, `playsinline`, no related/branding.
+ * - mp4 → returns the file URL; the caller uses a native <video loop muted>.
+ */
+export function buildBackgroundSrc(parsed: ParsedVideo): string {
+  if (parsed.provider === "youtube") {
+    const params = new URLSearchParams({
+      autoplay: "1",
+      mute: "1",
+      loop: "1",
+      playlist: parsed.id, // YouTube loops a single video only via playlist=<id>
+      controls: "0",
+      playsinline: "1",
+      modestbranding: "1",
+      rel: "0",
+      disablekb: "1",
+      fs: "0",
+    });
+    return `https://www.youtube-nocookie.com/embed/${encodeURIComponent(parsed.id)}?${params}`;
+  }
+  if (parsed.provider === "vimeo") {
+    const params = new URLSearchParams({
+      background: "1",
+      dnt: "1",
+      muted: "1",
+      autoplay: "1",
+      loop: "1",
+    });
+    return `https://player.vimeo.com/video/${encodeURIComponent(parsed.id)}?${params}`;
+  }
+  // mp4 — the id *is* the file URL.
+  return parsed.id;
+}

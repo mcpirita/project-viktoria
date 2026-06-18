@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import VideoEmbed from "@/components/VideoEmbed";
+import { AutoplayBackground } from "@/components/video/AutoplayBackground.client";
 import { WorkCaption, Eyebrow } from "@/components/ui";
 import { ALL } from "./categories";
 import type { Category } from "@/lib/schema";
@@ -53,9 +53,14 @@ export function WorkGrid({
       </div>
 
       {filtered.length === 0 ? (
-        <p className="work-caption py-12 text-[--color-maroon-muted]">
-          Nothing here yet.
-        </p>
+        <div className="flex flex-col items-center justify-center gap-3 rounded-[--radius-sm] border border-dashed border-[--color-line-rose] py-20 text-center">
+          <span className="label-eyebrow text-[--color-maroon-soft]">
+            Coming soon
+          </span>
+          <p className="work-caption max-w-[32ch] text-[--color-maroon-muted]">
+            New work in this section is being added.
+          </p>
+        </div>
       ) : (
         // mobile: 1 col · sm: even 2-up · lg: 6-col structured mosaic (below).
         <ul className="grid grid-cols-1 gap-x-5 gap-y-10 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-6">
@@ -145,22 +150,31 @@ function Tile({
     />
   );
 
-  // Real video link → play inline through the VideoEmbed facade (poster → tap).
+  // Real video link → silent looping autoplay-in-view background; the tile links
+  // through to the full work card (controls + sound) on tap.
   if (entry.isVideo && entry.video) {
+    const alt = [entry.client, entry.title].filter(Boolean).join(" — ");
     return (
-      <figure>
-        <VideoEmbed
-          src={entry.video}
-          poster={p?.src}
-          blurDataURL={p?.blurDataURL}
-          aspectRatio={p?.aspectRatio ?? 16 / 9}
-          title={[entry.client, entry.title].filter(Boolean).join(" — ")}
-          sizes={sizes}
-          priority={priority}
-          className="rounded-[--radius-sm]"
-        />
-        <figcaption>{caption}</figcaption>
-      </figure>
+      <Link href={`/work/${entry.slug}`} className="group block outline-none">
+        <div
+          className={`relative ${ratioClass} overflow-hidden rounded-[--radius-sm] bg-[--color-rose-deep]`}
+        >
+          <AutoplayBackground
+            src={entry.video}
+            posterSrc={p?.src}
+            title={alt}
+          />
+
+          {/* Expand affordance — signals the tile opens the full work. */}
+          <span
+            aria-hidden
+            className="absolute bottom-0 right-0 m-2 rounded-[--radius-xs] bg-[--color-maroon]/85 px-2 py-1 opacity-0 transition-opacity duration-300 ease-[--ease-editorial] group-hover:opacity-100 group-focus-visible:opacity-100"
+          >
+            <span className="label-micro !text-[--color-paper]">OPEN →</span>
+          </span>
+        </div>
+        {caption}
+      </Link>
     );
   }
 

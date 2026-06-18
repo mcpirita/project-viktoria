@@ -9,24 +9,25 @@ import type { Category } from "@/lib/schema";
 import type { IndexEntry } from "./types";
 
 /**
- * Top-level client island that lifts the active-category filter so the sticky
- * Header (centre filters) and the WorkGrid share one source of truth. Filtering
- * re-lays the SAME grid in place — no navigation, no reload. Everything heavy
- * (hero, about, contact) stays server-rendered around this island. The grid
- * sits on the rose field (the reference's SELECTED WORKS surface).
+ * Top-level client island that lifts the active-section filter so the compact
+ * masthead (centred menu) and the WorkGrid share one source of truth. Filtering
+ * re-lays the SAME grid in place — no navigation, no reload. The masthead also
+ * carries the clients marquee (its second row). Everything heavy (about,
+ * contact) stays server-rendered around this island. The grid sits on the rose
+ * field (the reference's SELECTED WORKS surface).
  */
 export function Showcase({
   entries,
-  categories,
+  marqueeItems,
 }: {
   entries: IndexEntry[];
-  categories: Category[];
+  marqueeItems: string[];
 }) {
   const [active, setActive] = useState<Category | typeof ALL>(ALL);
 
   return (
     <>
-      <Header categories={categories} active={active} onSelect={setActive} />
+      <Header active={active} onSelect={setActive} marqueeItems={marqueeItems} />
       <Section id="works" tone="rose">
         <WorkGrid entries={entries} active={active} />
       </Section>

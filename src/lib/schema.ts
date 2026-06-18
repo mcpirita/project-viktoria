@@ -19,16 +19,20 @@ import { z } from "zod";
 
 /**
  * Категория работы. Это ПОЛЕ, а не роут (роутинг — зона фаз F/H).
- * Набор подтверждён Викторией (2026-06-17): commercial, music video,
- * editorial, film, theater, art. Порядок здесь = порядок фильтров в шапке.
- * Добавление категории = одна строка здесь.
+ * Меню шапки (подтверждено Викторией 2026-06-18): commercial, costume,
+ * set-props, music video, theatre. Порядок здесь = порядок пунктов меню.
+ * costume/set-props/theater пока без работ — меню показывает их с заглушкой
+ * «coming soon» (см. WorkGrid). editorial/film/art — резерв в enum, в меню не
+ * выводятся (MENU в categories.ts). Добавление категории = одна строка здесь.
  */
 export const CATEGORIES = [
   "commercial",
+  "costume",
+  "set-props",
   "music-video",
+  "theater",
   "editorial",
   "film",
-  "theater",
   "art",
 ] as const;
 

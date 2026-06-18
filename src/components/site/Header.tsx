@@ -1,95 +1,72 @@
 "use client";
 
-import { LiveClock } from "./LiveClock";
-import { CATEGORY_LABELS, ALL } from "./categories";
+import { CATEGORY_LABELS, MENU, ALL } from "./categories";
+import { Marquee } from "./Marquee";
 import type { Category } from "@/lib/schema";
 
 /**
- * Sticky three-column header (Phase F): name · category filters · contact+clock.
- * It is a CLIENT island because the centre filters drive the index in place —
- * the active category is lifted to the parent `Showcase` so header and list
- * share one source of truth (no route change, no reload).
+ * Compact, centred masthead (redesign 2026-06-18, per Victoria).
  *
- * Mobile: the filters degrade to a horizontal scroll-chip strip below the top
- * row (name + CONTACT stay one tap). Clock hides on the narrowest screens so it
- * never breaks the layout. A hairline sits under the whole header.
+ * Two small stacked rows, everything centred — no duplicated name, no hero:
+ *   1. NAME (centred) + curated menu chips (centred): the five sections she
+ *      agreed — COMMERCIAL · COSTUME · SET & PROPS · MUSIC VIDEO · THEATRE.
+ *   2. The clients marquee (running strip) directly beneath.
+ * Then the work grid. The menu is a CLIENT island: chips drive the grid filter
+ * in place (active lifted to `Showcase`), no route change. Sections with no
+ * work yet still show — the grid renders a "coming soon" state for them.
+ *
+ * Mobile: chips degrade to a centred horizontal scroll strip; name stays on top.
  */
 export function Header({
-  categories,
   active,
   onSelect,
+  marqueeItems,
 }: {
-  categories: Category[];
   active: Category | typeof ALL;
   onSelect: (c: Category | typeof ALL) => void;
+  marqueeItems: string[];
 }) {
   return (
     <header className="sticky top-0 z-30 bg-[--color-paper]/90 backdrop-blur-md">
       <div className="mx-auto w-full max-w-[--container-site] px-[--spacing-gutter] md:px-[--spacing-gutter-lg]">
-        {/* top row */}
-        <div className="flex h-14 items-center justify-between gap-4 md:h-16">
+        {/* Row 1 — centred name */}
+        <div className="flex justify-center pt-3 pb-1.5">
           <a
             href="#top"
-            className="font-serif text-[length:--text-xs] uppercase tracking-[--tracking-wider] text-[--color-maroon-deep] sm:text-[length:--text-sm]"
+            className="font-serif text-[length:--text-sm] uppercase tracking-[--tracking-wider] text-[--color-maroon-deep] sm:text-[length:--text-base]"
           >
             Viktoria Martjanova
           </a>
-
-          {/* centre filters — desktop only (mobile strip is below) */}
-          {categories.length > 0 && (
-            <nav
-              aria-label="Filter works"
-              className="hidden flex-1 items-center justify-center gap-1 lg:flex"
-            >
-              <Chip
-                label={ALL}
-                selected={active === ALL}
-                onClick={() => onSelect(ALL)}
-              />
-              {categories.map((c) => (
-                <Chip
-                  key={c}
-                  label={CATEGORY_LABELS[c]}
-                  selected={active === c}
-                  onClick={() => onSelect(c)}
-                />
-              ))}
-            </nav>
-          )}
-
-          <div className="flex shrink-0 items-center gap-4">
-            <LiveClock className="hidden sm:inline" />
-            <a
-              href="#contact"
-              className="inline-flex min-h-[--spacing-touch] items-center font-serif text-[length:--text-xs] uppercase tracking-[--tracking-wider] text-[--color-maroon] link-editorial"
-            >
-              Contact
-            </a>
-          </div>
         </div>
 
-        {/* mobile / tablet filter strip — horizontal scroll chips */}
-        {categories.length > 0 && (
-          <nav
-            aria-label="Filter works"
-            className="-mx-[--spacing-gutter] flex gap-1 overflow-x-auto px-[--spacing-gutter] pb-2 lg:hidden"
-          >
+        {/* Row 1 (cont.) — centred curated menu */}
+        <nav
+          aria-label="Sections"
+          className="-mx-[--spacing-gutter] flex justify-start gap-1 overflow-x-auto px-[--spacing-gutter] pb-2 sm:justify-center"
+        >
+          <Chip
+            label={ALL}
+            selected={active === ALL}
+            onClick={() => onSelect(ALL)}
+          />
+          {MENU.map((c) => (
             <Chip
-              label={ALL}
-              selected={active === ALL}
-              onClick={() => onSelect(ALL)}
+              key={c}
+              label={CATEGORY_LABELS[c]}
+              selected={active === c}
+              onClick={() => onSelect(c)}
             />
-            {categories.map((c) => (
-              <Chip
-                key={c}
-                label={CATEGORY_LABELS[c]}
-                selected={active === c}
-                onClick={() => onSelect(c)}
-              />
-            ))}
-          </nav>
-        )}
+          ))}
+        </nav>
       </div>
+
+      <hr className="hairline hairline--ink" />
+
+      {/* Row 2 — clients marquee */}
+      <div className="mx-auto w-full max-w-[--container-site] px-[--spacing-gutter] py-2 md:px-[--spacing-gutter-lg]">
+        <Marquee items={marqueeItems} />
+      </div>
+
       <hr className="hairline hairline--ink" />
     </header>
   );

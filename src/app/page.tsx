@@ -1,17 +1,9 @@
 import Image from "next/image";
-import {
-  Body,
-  Button,
-  Eyebrow,
-  Heading,
-  MicroLabel,
-  Section,
-} from "@/components/ui";
-import { getFeatured, getCategories } from "@/lib/works";
+import { Body, Eyebrow, Heading, Section } from "@/components/ui";
+import { getFeatured } from "@/lib/works";
 import { pickCover } from "@/components/site/image";
 import { Showcase } from "@/components/site/Showcase";
 import { Marquee } from "@/components/site/Marquee";
-import { LiveClock } from "@/components/site/LiveClock";
 import type { IndexEntry } from "@/components/site/types";
 
 /**
@@ -55,10 +47,7 @@ const CLIENTS = [
 ];
 
 export default async function Home() {
-  const [works, categories] = await Promise.all([
-    getFeatured(),
-    getCategories(),
-  ]);
+  const works = await getFeatured();
 
   const entries: IndexEntry[] = works.map((w) => {
     const preview = pickCover(w.slug, w.cover, w.final, w.process);
@@ -80,43 +69,8 @@ export default async function Home() {
 
   return (
     <main id="top">
-      {/* ---- Hero (server) ----------------------------------------------- */}
-      <Section
-        tone="paper"
-        className="flex min-h-[56vh] flex-col sm:min-h-[60vh]"
-      >
-        <div className="flex items-center justify-between">
-          <MicroLabel>PORTFOLIO — ART DEPARTMENT</MicroLabel>
-          <LiveClock />
-        </div>
-
-        <div className="mt-[clamp(1.25rem,4vh,2.25rem)]">
-          <Eyebrow className="mb-4">VIKTORIA MARTJANOVA</Eyebrow>
-          <h1 className="font-serif text-[length:--text-hero] font-light uppercase leading-[--text-hero--line-height] tracking-[--tracking-tightest] text-[--color-maroon-deep]">
-            <span className="block">Costume,</span>
-            <span className="block">Set &amp; Props,</span>
-            <span className="block text-[--color-maroon-soft]">
-              Production Design
-            </span>
-          </h1>
-          <p className="mt-6 max-w-[40ch] font-serif text-[length:--text-lg] uppercase tracking-[--tracking-wide] text-[--color-maroon-soft]">
-            Art department for film &amp; advertising
-          </p>
-          <div className="mt-8 flex flex-wrap gap-4">
-            <Button href="#works">Selected Works</Button>
-            <Button href="#contact" variant="text">
-              Contact
-            </Button>
-          </div>
-        </div>
-
-        <div className="mt-auto pt-[clamp(1.75rem,4vh,3rem)]">
-          <Marquee items={CLIENTS} />
-        </div>
-      </Section>
-
-      {/* ---- Sticky header + index list (client island) ------------------ */}
-      <Showcase entries={entries} categories={categories} />
+      {/* ---- Compact masthead (name + menu + marquee) + work grid -------- */}
+      <Showcase entries={entries} marqueeItems={CLIENTS} />
 
       {/* ---- About (paper, server) — alternates off the rose works field -- */}
       <Section id="about" tone="paper">
