@@ -59,7 +59,9 @@ export default async function WorkPage({
   // Crew credits — only the rows Victoria actually provided render.
   const credits: { label: string; value: string }[] = [
     { label: "Role", value: work.role },
+    { label: "Creative Director", value: work.credits.creativeDirector ?? "" },
     { label: "Director", value: work.credits.director ?? "" },
+    { label: "Producer", value: work.credits.producer ?? "" },
     { label: "DOP", value: work.credits.dop ?? "" },
     { label: "Production Design", value: work.credits.productionDesigner ?? "" },
     { label: "Agency", value: work.credits.agency ?? "" },

@@ -76,7 +76,9 @@ export const workSchema = z.object({
    */
   credits: z
     .object({
+      creativeDirector: z.string().optional(),
       director: z.string().optional(),
+      producer: z.string().optional(),
       dop: z.string().optional(),
       /** Production Designer, если им был НЕ Виктория (тогда у неё другая роль). */
       productionDesigner: z.string().optional(),

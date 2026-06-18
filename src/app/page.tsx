@@ -90,15 +90,42 @@ export default async function Home() {
             <Eyebrow as="h2" className="mb-6">
               ABOUT
             </Eyebrow>
-            <Body className="max-w-[46ch] uppercase tracking-[--tracking-wide]">
-              Viktoria Martjanova is a Tallinn-based art department artist
-              working across film and advertising. With over a decade on set, her
-              work spans costume and wardrobe, set design, props and production
-              design — shaping the look of a scene from first concept to the
-              finished set. She also writes and stages her own productions,
-              treating every project, commercial or personal, as a complete
-              visual world.
-            </Body>
+            <div className="max-w-[46ch] space-y-5 uppercase tracking-[--tracking-wide]">
+              <Body>
+                Viktoria Martjanova is a set designer and art director working
+                across film, advertising, editorial fashion, and live events.
+                Every project is built hands-on — custom props, physical
+                construction, full execution.
+              </Body>
+              <Body>
+                Alongside commercial work, she maintains an independent practice
+                as an installation and performance artist.
+              </Body>
+              <Body>
+                Taking commissions in set design, event design, and art
+                direction for film, music video, and theatre.
+              </Body>
+              <Body>Based between Italy and Estonia, working worldwide.</Body>
+            </div>
+
+            <Eyebrow as="h3" className="mb-4 mt-10">
+              SELECTED AWARDS
+            </Eyebrow>
+            <ul className="space-y-2">
+              {[
+                "BOB Award, Best Production Design, 2024",
+                "Young Artist Award, 2025",
+                "Nominated, Best Theatre Video Artist, Latvia, 2025",
+                "Performa Biennial, New York, 2023",
+              ].map((award) => (
+                <li
+                  key={award}
+                  className="font-serif text-[length:--text-sm] uppercase tracking-[--tracking-wide] text-[--color-maroon]"
+                >
+                  {award}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </Section>

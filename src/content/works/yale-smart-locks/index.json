@@ -1,0 +1,18 @@
+{
+  "title": "Smart Locks",
+  "client": "Yale",
+  "production": "Wedia",
+  "category": "commercial",
+  "role": "Production Designer",
+  "credits": {
+    "creativeDirector": "Gunnar Hunt",
+    "director": "Janar Aronija",
+    "producer": "Kirill Volkov",
+    "dop": "Martin Venela",
+    "agency": "Kagu Agency"
+  },
+  "video": "https://vimeo.com/1188983908",
+  "order": 16,
+  "final": [],
+  "process": []
+}
