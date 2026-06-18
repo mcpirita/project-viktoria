@@ -69,9 +69,14 @@ const CACHE_PATH = path.join(PROJECT_ROOT, ".cache", "loops.json");
 
 /** Loop segment length (seconds). Override with --seg. */
 const DEFAULT_SEGMENT = 7;
-/** Loop widths. 720 = the contract base; 480 = optional mobile (--mobile). */
-const LOOP_WIDTH = 800; // visual ceiling per spec (<=800px); file named loop-720.*
-const MOBILE_WIDTH = 480;
+/**
+ * Loop widths. The desktop grid renders 2-up tiles (~580px CSS) — at 2× retina
+ * that needs ~1160px of source, so 800px read soft (Victoria flagged it). Encode
+ * at 1200/720 to stay crisp on retina; CSS object-cover finishes the crop.
+ * File names keep the loop-720 / loop-480 labels (arbitrary tier tags).
+ */
+const LOOP_WIDTH = 1200; // desktop tier → loop-720.*
+const MOBILE_WIDTH = 720; // narrow-viewport tier (<=640px) → loop-480.*
 /**
  * Frame-rate caps. Masters are often 60fps (Delta is) — a silent background
  * loop reads fine at 30fps and that roughly halves the bytes, which is what
@@ -81,8 +86,8 @@ const MOBILE_WIDTH = 480;
 const LOOP_FPS = 30;
 const PLAYER_FPS = 30;
 /** Loop CRF defaults (spec). Override per-run with --webm-crf / --mp4-crf. */
-const DEFAULT_WEBM_CRF = 32;
-const DEFAULT_MP4_CRF = 26;
+const DEFAULT_WEBM_CRF = 30;
+const DEFAULT_MP4_CRF = 24;
 /** Full-player (K5) defaults. Override with --player-crf / --player-height. */
 const DEFAULT_PLAYER_CRF = 23;
 const DEFAULT_PLAYER_MAX_HEIGHT = 1080;

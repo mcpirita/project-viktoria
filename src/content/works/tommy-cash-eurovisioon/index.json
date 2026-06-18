@@ -7,11 +7,12 @@
   "credits": {
     "director": "Alina Pasok"
   },
-  "video": "https://www.youtube.com/watch?v=9b9Z5HSCXOI&t=113",
+  "video": "https://www.youtube.com/watch?v=9b9Z5HSCXOI&t=110",
   "order": 15,
   "final": [
     "screenshot-2026-03-15-at-16-59-37",
     "screenshot-2026-03-15-at-16-59-47"
   ],
-  "process": []
+  "process": [],
+  "loopStart": 110
 }

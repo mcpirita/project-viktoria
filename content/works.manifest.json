@@ -59,6 +59,31 @@
       "works/adidas-tommy-cash/tommy-cash-x-adidas-3-1200.avif"
     ]
   },
+  "works/adidas/loop": {
+    "kind": "loop",
+    "width": 1200,
+    "height": 676,
+    "aspectRatio": 1.7751,
+    "durationSeconds": 7,
+    "widths": [
+      720,
+      480
+    ],
+    "loop": {
+      "webm": "works/adidas/loop-720.webm",
+      "mp4": "works/adidas/loop-720.mp4"
+    },
+    "loopMobile": {
+      "webm": "works/adidas/loop-480.webm",
+      "mp4": "works/adidas/loop-480.mp4"
+    },
+    "files": [
+      "works/adidas/loop-720.webm",
+      "works/adidas/loop-720.mp4",
+      "works/adidas/loop-480.webm",
+      "works/adidas/loop-480.mp4"
+    ]
+  },
   "works/adidas/low-quality-screenshot-2026-03-13-at-17-29-28": {
     "width": 3024,
     "height": 1652,
@@ -498,9 +523,9 @@
   },
   "works/bolt-caromatherapy/loop": {
     "kind": "loop",
-    "width": 800,
-    "height": 450,
-    "aspectRatio": 1.7778,
+    "width": 1200,
+    "height": 676,
+    "aspectRatio": 1.7751,
     "durationSeconds": 7,
     "widths": [
       720,
@@ -636,6 +661,31 @@
       "works/bolt-caromatherapy/screenshot-2026-03-15-at-18-17-43-2000.avif"
     ]
   },
+  "works/bolt-interview/loop": {
+    "kind": "loop",
+    "width": 1200,
+    "height": 636,
+    "aspectRatio": 1.8868,
+    "durationSeconds": 7,
+    "widths": [
+      720,
+      480
+    ],
+    "loop": {
+      "webm": "works/bolt-interview/loop-720.webm",
+      "mp4": "works/bolt-interview/loop-720.mp4"
+    },
+    "loopMobile": {
+      "webm": "works/bolt-interview/loop-480.webm",
+      "mp4": "works/bolt-interview/loop-480.mp4"
+    },
+    "files": [
+      "works/bolt-interview/loop-720.webm",
+      "works/bolt-interview/loop-720.mp4",
+      "works/bolt-interview/loop-480.webm",
+      "works/bolt-interview/loop-480.mp4"
+    ]
+  },
   "works/bolt-interview/screenshot-2026-03-15-at-15-28-45": {
     "width": 3024,
     "height": 1688,
@@ -684,9 +734,9 @@
   },
   "works/bolt-whatever-you-do/loop": {
     "kind": "loop",
-    "width": 800,
-    "height": 450,
-    "aspectRatio": 1.7778,
+    "width": 1200,
+    "height": 676,
+    "aspectRatio": 1.7751,
     "durationSeconds": 7,
     "widths": [
       720,
@@ -798,20 +848,27 @@
   },
   "works/delta/loop": {
     "kind": "loop",
-    "width": 800,
-    "height": 450,
-    "aspectRatio": 1.7778,
-    "durationSeconds": 6,
+    "width": 1200,
+    "height": 676,
+    "aspectRatio": 1.7751,
+    "durationSeconds": 5,
     "widths": [
-      720
+      720,
+      480
     ],
     "loop": {
       "webm": "works/delta/loop-720.webm",
       "mp4": "works/delta/loop-720.mp4"
     },
+    "loopMobile": {
+      "webm": "works/delta/loop-480.webm",
+      "mp4": "works/delta/loop-480.mp4"
+    },
     "files": [
       "works/delta/loop-720.webm",
-      "works/delta/loop-720.mp4"
+      "works/delta/loop-720.mp4",
+      "works/delta/loop-480.webm",
+      "works/delta/loop-480.mp4"
     ]
   },
   "works/delta/low-quality-use-this-img-9474-poster": {
@@ -1014,9 +1071,9 @@
   },
   "works/highsnobiety-x-jameson/loop": {
     "kind": "loop",
-    "width": 800,
-    "height": 450,
-    "aspectRatio": 1.7778,
+    "width": 1200,
+    "height": 676,
+    "aspectRatio": 1.7751,
     "durationSeconds": 7,
     "widths": [
       720,
@@ -2060,9 +2117,9 @@
   },
   "works/tele-2/loop": {
     "kind": "loop",
-    "width": 800,
-    "height": 450,
-    "aspectRatio": 1.7778,
+    "width": 1200,
+    "height": 676,
+    "aspectRatio": 1.7751,
     "durationSeconds": 7,
     "widths": [
       720,
@@ -2198,6 +2255,31 @@
       "works/tele-2/tele2-screenfreeholidays-v1-2160p-poster-2000.avif"
     ]
   },
+  "works/tommy-cash-eurovisioon/loop": {
+    "kind": "loop",
+    "width": 1200,
+    "height": 676,
+    "aspectRatio": 1.7751,
+    "durationSeconds": 5,
+    "widths": [
+      720,
+      480
+    ],
+    "loop": {
+      "webm": "works/tommy-cash-eurovisioon/loop-720.webm",
+      "mp4": "works/tommy-cash-eurovisioon/loop-720.mp4"
+    },
+    "loopMobile": {
+      "webm": "works/tommy-cash-eurovisioon/loop-480.webm",
+      "mp4": "works/tommy-cash-eurovisioon/loop-480.mp4"
+    },
+    "files": [
+      "works/tommy-cash-eurovisioon/loop-720.webm",
+      "works/tommy-cash-eurovisioon/loop-720.mp4",
+      "works/tommy-cash-eurovisioon/loop-480.webm",
+      "works/tommy-cash-eurovisioon/loop-480.mp4"
+    ]
+  },
   "works/tommy-cash-eurovisioon/screenshot-2026-03-15-at-16-59-37": {
     "width": 2552,
     "height": 1358,
@@ -2266,9 +2348,9 @@
   },
   "works/tommy-lotto/loop": {
     "kind": "loop",
-    "width": 800,
-    "height": 450,
-    "aspectRatio": 1.7778,
+    "width": 1200,
+    "height": 676,
+    "aspectRatio": 1.7751,
     "durationSeconds": 7,
     "widths": [
       720,
@@ -2311,9 +2393,9 @@
   },
   "works/victorinox/loop": {
     "kind": "loop",
-    "width": 800,
-    "height": 450,
-    "aspectRatio": 1.7778,
+    "width": 1200,
+    "height": 676,
+    "aspectRatio": 1.7751,
     "durationSeconds": 7,
     "widths": [
       720,
@@ -2652,9 +2734,9 @@
   },
   "works/yale-smart-locks/loop": {
     "kind": "loop",
-    "width": 800,
-    "height": 450,
-    "aspectRatio": 1.7778,
+    "width": 1200,
+    "height": 676,
+    "aspectRatio": 1.7751,
     "durationSeconds": 7,
     "widths": [
       720,

@@ -39,11 +39,11 @@ const ogText = `
     <text x="96" y="150" font-size="22" letter-spacing="6"
           fill="${MAROON_MUTED}" font-weight="400">P O R T F O L I O</text>
     <text x="92" y="300" font-size="96" fill="${MAROON_DEEP}"
-          font-style="italic" font-weight="400">Viktoria</text>
+          font-weight="400">Viktoria</text>
     <text x="92" y="396" font-size="96" fill="${MAROON_DEEP}"
-          font-style="italic" font-weight="400">Martjanova</text>
+          font-weight="400">Martjanova</text>
     <line x1="96" y1="452" x2="300" y2="452" stroke="${MAROON}" stroke-opacity="0.3" stroke-width="1"/>
-    <text x="96" y="506" font-size="30" fill="${MAROON_SOFT}">Art department · Costume &amp; set design</text>
+    <text x="96" y="506" font-size="30" fill="${MAROON_SOFT}">Production Design. Art Department</text>
   </g>
 </svg>`;
 
