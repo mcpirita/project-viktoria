@@ -150,6 +150,11 @@ export default async function Home() {
               href: "https://instagram.com/fake.versace.v",
             },
             {
+              k: "TELEGRAM",
+              v: "@Martjanova",
+              href: "https://t.me/Martjanova",
+            },
+            {
               k: "IMDB",
               v: "imdb.com/name/nm11979739",
               href: "https://www.imdb.com/name/nm11979739/",
