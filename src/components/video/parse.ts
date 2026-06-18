@@ -19,6 +19,12 @@ export type ParsedVideo = {
    * For mp4 — the (absolute or root-relative) file URL.
    */
   id: string;
+  /**
+   * Optional start offset in whole seconds, parsed from the source URL's
+   * `t`/`start` param (YouTube: `?t=113` or `?t=1m53s`; Vimeo: `#t=113s`).
+   * The tapped player begins here; omitted = play from the start.
+   */
+  start?: number;
 };
 
 /**
@@ -75,6 +81,48 @@ export function parseVimeoId(url: string): string | null {
   return null;
 }
 
+/**
+ * Parse a start offset (whole seconds) from a `t`/`start` value. Accepts a bare
+ * number of seconds (`113`, `113s`) or YouTube's `1h2m3s` shorthand. Returns
+ * `undefined` for missing/zero/unparseable input.
+ */
+function parseStartSeconds(value: string | null): number | undefined {
+  if (!value) return undefined;
+  const v = value.trim();
+  // Plain integer seconds (with optional trailing `s`).
+  if (/^\d+s?$/.test(v)) {
+    const n = parseInt(v, 10);
+    return n > 0 ? n : undefined;
+  }
+  // `1h2m3s` shorthand — any subset, in order.
+  const m = v.match(/^(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?$/i);
+  if (m && (m[1] || m[2] || m[3])) {
+    const total =
+      (parseInt(m[1] ?? "0", 10) * 3600) +
+      (parseInt(m[2] ?? "0", 10) * 60) +
+      parseInt(m[3] ?? "0", 10);
+    return total > 0 ? total : undefined;
+  }
+  return undefined;
+}
+
+/** Extract a start offset (seconds) from a URL's `t`/`start` param or `#t=` hash. */
+function parseStart(url: string): number | undefined {
+  let u: URL;
+  try {
+    u = new URL(url);
+  } catch {
+    return undefined;
+  }
+  const fromQuery =
+    parseStartSeconds(u.searchParams.get("t")) ??
+    parseStartSeconds(u.searchParams.get("start"));
+  if (fromQuery) return fromQuery;
+  // Vimeo carries time in the hash, e.g. `#t=113s`.
+  const hash = u.hash.match(/(?:^|[#&])t=([^&]+)/);
+  return hash ? parseStartSeconds(hash[1]) : undefined;
+}
+
 /** True when the URL looks like a direct video file (mp4/webm/mov/m4v). */
 function looksLikeFile(url: string): boolean {
   // Strip query/hash before testing the extension.
@@ -107,11 +155,13 @@ export function parseVideo(src: string, provider?: VideoProvider): ParsedVideo {
     return { provider: "mp4", id: raw };
   }
 
+  const start = parseStart(raw);
+
   const yt = parseYouTubeId(raw);
-  if (yt) return { provider: "youtube", id: yt };
+  if (yt) return { provider: "youtube", id: yt, start };
 
   const vimeo = parseVimeoId(raw);
-  if (vimeo) return { provider: "vimeo", id: vimeo };
+  if (vimeo) return { provider: "vimeo", id: vimeo, start };
 
   if (looksLikeFile(raw)) return { provider: "mp4", id: raw };
 
@@ -141,6 +191,7 @@ export function buildEmbedSrc(parsed: ParsedVideo): string {
       autoplay: "1",
       mute: "1",
     });
+    if (parsed.start) params.set("start", String(parsed.start));
     return `https://www.youtube-nocookie.com/embed/${encodeURIComponent(parsed.id)}?${params}`;
   }
   if (parsed.provider === "vimeo") {
@@ -150,7 +201,9 @@ export function buildEmbedSrc(parsed: ParsedVideo): string {
       autoplay: "1",
       muted: "1",
     });
-    return `https://player.vimeo.com/video/${encodeURIComponent(parsed.id)}?${params}`;
+    const base = `https://player.vimeo.com/video/${encodeURIComponent(parsed.id)}?${params}`;
+    // Vimeo takes the start offset in the hash, not a query param.
+    return parsed.start ? `${base}#t=${parsed.start}s` : base;
   }
   // mp4 — the id *is* the file URL.
   return parsed.id;
