@@ -74,15 +74,15 @@ export default async function Home() {
       {/* ---- About (paper, server) — alternates off the rose works field -- */}
       <Section id="about" tone="paper">
         <div className="grid grid-cols-1 gap-x-12 gap-y-10 lg:grid-cols-[minmax(0,22rem)_1fr]">
-          {/* portrait — square crop, тестовый вариант (assets/portrait/IMG_5470.JPG) */}
+          {/* portrait — 4:5 (assets/portrait/viktoria-portrait.jpg) */}
           <Image
             src="/portrait/viktoria-1200.webp"
             alt="Viktoria Martjanova"
-            width={1200}
-            height={1200}
+            width={1080}
+            height={1350}
             sizes="(min-width: 1024px) 22rem, 100vw"
             placeholder="blur"
-            blurDataURL="data:image/webp;base64,UklGRtYAAABXRUJQVlA4IMoAAABQBQCdASoUABQAPtFgqE+oJSOiKAgBABoJQBOmWYS4wUq6BKyXKtlWUaKZxz03OSnpN/AA/s0Yu/SIfgvxbuYXlocDiwHmqKC12pibjBCdWAQkMbGpY8Y3EDHswwNIRPdS5NyKOiYgIrSy7dTxAbflvWv+tpVH3BBttPVz+ttW3/XdRdPye1NHCO0waKwnMo8hF593oU0BWUyd+QLKTsunohBd53vIkb+rjWNmdkp2BUH/jIlD+TnS0M3Uf6kn41XsE9MmwBBQ8gAA"
+            blurDataURL="data:image/webp;base64,UklGRo4AAABXRUJQVlA4IIIAAACQBACdASoUABkAPu1ur1KppiQnqAgBMB2JZQAAKtrjzmm0PyhrPZ4sht0hvgQA209LLkv35N0H25gpFOpYUhUfoZvMUq7n5pXRuC3Iauvqj//NRYRpHe7gQnAhZM03jE3HPIkh7dAJ1XQr7xByfCM6HuJ3tQvX93CO1P7csc3AAAAA"
             className="h-auto w-full self-start rounded-[--radius-sm] object-cover"
           />
 
