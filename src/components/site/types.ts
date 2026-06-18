@@ -1,4 +1,4 @@
-import type { Category } from "@/lib/schema";
+import type { Category, LoopSrc } from "@/lib/schema";
 import type { RenderableImage } from "./image";
 
 /**
@@ -27,4 +27,10 @@ export type IndexEntry = {
    * play marker but links through to the project card (Phase H wires real URLs).
    */
   video?: string;
+  /**
+   * Self-hosted фоновый луп (Фаза 1.5, стратегия A). Присутствует → плитка
+   * играет лёгкий локальный `<video>` (webm+mp4) вместо тяжёлого Vimeo-iframe.
+   * Отсутствует → грид падает на Vimeo/YouTube-iframe-фолбэк через `video`.
+   */
+  loopSrc?: LoopSrc;
 };

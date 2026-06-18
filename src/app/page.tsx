@@ -60,9 +60,11 @@ export default async function Home() {
       // Video work: real link, a video-poster frame, or a moving-image category.
       isVideo:
         Boolean(w.video) ||
+        Boolean(w.loopSrc) ||
         preview?.kind === "video-poster" ||
         w.category === "music-video",
       video: w.video,
+      loopSrc: w.loopSrc ?? undefined,
     };
   });
 

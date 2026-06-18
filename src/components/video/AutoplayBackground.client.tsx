@@ -27,12 +27,23 @@ import {
   parseVideo,
   type VideoProvider,
 } from "./parse";
+import type { LoopSrc } from "@/lib/schema";
 
 type AutoplayBackgroundProps = {
-  /** Full video URL (YouTube/Vimeo/mp4) — same field as Work.video. */
-  src: string;
+  /**
+   * Full video URL (YouTube/Vimeo/mp4) — same field as Work.video. Used only as
+   * the Vimeo/YouTube iframe FALLBACK when no self-hosted `loop` is present.
+   */
+  src?: string;
   /** Force a provider; omit to auto-detect. */
   provider?: VideoProvider;
+  /**
+   * Self-hosted compressed loop (Phase 1.5, strategy A). When present, the tile
+   * plays a light native `<video>` (webm+mp4) instead of mounting the heavy
+   * provider iframe — near-instant start, no third-party player JS. Falls back
+   * to the iframe (`src`) only when this is absent.
+   */
+  loop?: LoopSrc;
   /** Poster frame (always painted; sits under the player). */
   posterSrc?: string;
   /** Accessible/title text for the iframe. */
@@ -42,6 +53,7 @@ type AutoplayBackgroundProps = {
 export function AutoplayBackground({
   src,
   provider,
+  loop,
   posterSrc,
   title,
 }: AutoplayBackgroundProps) {
@@ -72,11 +84,14 @@ export function AutoplayBackground({
     return () => io.disconnect();
   }, []);
 
-  let parsed;
-  try {
-    parsed = parseVideo(src, provider);
-  } catch {
-    parsed = null;
+  // Parse the iframe fallback only when there's no self-hosted loop and a src.
+  let parsed = null;
+  if (!loop && src) {
+    try {
+      parsed = parseVideo(src, provider);
+    } catch {
+      parsed = null;
+    }
   }
 
   return (
@@ -96,44 +111,77 @@ export function AutoplayBackground({
       {/* Player sits ON TOP of the poster but fades in only once it has loaded,
           so the poster (never the player's black bg) is what shows during load
           or if autoplay is blocked. */}
-      {active && parsed
-        ? (parsed.provider === "mp4" ? (
-            <video
-              className={`pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
-                loaded ? "opacity-100" : "opacity-0"
-              }`}
-              src={parsed.id}
-              poster={posterSrc}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              onLoadedData={() => setLoaded(true)}
-            />
-          ) : (
-            <iframe
-              className={`pointer-events-none absolute border-0 transition-opacity duration-700 ${
-                loaded ? "opacity-100" : "opacity-0"
-              }`}
-              // background players are oversized then scaled to cover the box,
-              // so the provider's own letterboxing never shows.
-              style={{
-                width: "133%",
-                height: "133%",
-                left: "-16.5%",
-                top: "-16.5%",
-              }}
-              src={buildBackgroundSrc(parsed)}
-              title={title ?? "Background video"}
-              loading="lazy"
-              allow="autoplay; encrypted-media; picture-in-picture"
-              aria-hidden
-              tabIndex={-1}
-              onLoad={() => setLoaded(true)}
-            />
-          ))
-        : null}
+      {active && loop ? (
+        // Preferred path: light self-hosted loop (no third-party player JS).
+        // webm first (smaller), mp4 fallback for Safari. The 480p variant is
+        // hinted to narrow viewports via media; the 720p set covers the rest.
+        <video
+          className={`pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+            loaded ? "opacity-100" : "opacity-0"
+          }`}
+          poster={posterSrc}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          onLoadedData={() => setLoaded(true)}
+        >
+          {loop.loop480 ? (
+            <>
+              <source
+                src={loop.loop480.webm}
+                type="video/webm"
+                media="(max-width: 640px)"
+              />
+              <source
+                src={loop.loop480.mp4}
+                type="video/mp4"
+                media="(max-width: 640px)"
+              />
+            </>
+          ) : null}
+          <source src={loop.webm} type="video/webm" />
+          <source src={loop.mp4} type="video/mp4" />
+        </video>
+      ) : active && parsed ? (
+        parsed.provider === "mp4" ? (
+          <video
+            className={`pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+              loaded ? "opacity-100" : "opacity-0"
+            }`}
+            src={parsed.id}
+            poster={posterSrc}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            onLoadedData={() => setLoaded(true)}
+          />
+        ) : (
+          <iframe
+            className={`pointer-events-none absolute border-0 transition-opacity duration-700 ${
+              loaded ? "opacity-100" : "opacity-0"
+            }`}
+            // background players are oversized then scaled to cover the box,
+            // so the provider's own letterboxing never shows.
+            style={{
+              width: "133%",
+              height: "133%",
+              left: "-16.5%",
+              top: "-16.5%",
+            }}
+            src={buildBackgroundSrc(parsed)}
+            title={title ?? "Background video"}
+            loading="lazy"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            aria-hidden
+            tabIndex={-1}
+            onLoad={() => setLoaded(true)}
+          />
+        )
+      ) : null}
     </div>
   );
 }

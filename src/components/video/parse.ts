@@ -131,6 +131,20 @@ function looksLikeFile(url: string): boolean {
 }
 
 /**
+ * S2 (hardening, 2026-06-18): a self-hosted/file video URL is safe to drop into
+ * a `<video src>` only when it is a real `https://` URL or a root-relative path
+ * (`/works/.../file.mp4`). Reject everything else — `javascript:`, `data:`,
+ * protocol-relative `//evil`, etc. The risk is theoretical (content is authored
+ * by us, not user input), but the guard is cheap and keeps the facade strict.
+ */
+function isSafeFileUrl(url: string): boolean {
+  return (
+    /^https:\/\//i.test(url) ||
+    (url.startsWith("/") && !url.startsWith("//"))
+  );
+}
+
+/**
  * Resolve a raw video source into `{ provider, id }`.
  *
  * Resolution order:
@@ -152,6 +166,11 @@ export function parseVideo(src: string, provider?: VideoProvider): ParsedVideo {
     return { provider, id: raw };
   }
   if (provider === "mp4") {
+    if (!isSafeFileUrl(raw)) {
+      throw new Error(
+        `parseVideo: unsafe mp4 url "${raw}" — only https:// or root-relative (/…) is allowed.`,
+      );
+    }
     return { provider: "mp4", id: raw };
   }
 
@@ -163,7 +182,14 @@ export function parseVideo(src: string, provider?: VideoProvider): ParsedVideo {
   const vimeo = parseVimeoId(raw);
   if (vimeo) return { provider: "vimeo", id: vimeo, start };
 
-  if (looksLikeFile(raw)) return { provider: "mp4", id: raw };
+  if (looksLikeFile(raw)) {
+    if (!isSafeFileUrl(raw)) {
+      throw new Error(
+        `parseVideo: unsafe file url "${raw}" — only https:// or root-relative (/…) is allowed.`,
+      );
+    }
+    return { provider: "mp4", id: raw };
+  }
 
   throw new Error(
     `parseVideo: could not determine provider for "${raw}". ` +
@@ -236,6 +262,9 @@ export function buildBackgroundSrc(parsed: ParsedVideo): string {
       disablekb: "1",
       fs: "0",
     });
+    // Start the loop at the chosen offset (YouTube honours `start` on the
+    // initial play and on each playlist-loop replay).
+    if (parsed.start) params.set("start", String(parsed.start));
     return `https://www.youtube-nocookie.com/embed/${encodeURIComponent(parsed.id)}?${params}`;
   }
   if (parsed.provider === "vimeo") {
@@ -246,6 +275,10 @@ export function buildBackgroundSrc(parsed: ParsedVideo): string {
       autoplay: "1",
       loop: "1",
     });
+    if (parsed.start) {
+      const base = `https://player.vimeo.com/video/${encodeURIComponent(parsed.id)}?${params}`;
+      return `${base}#t=${parsed.start}s`;
+    }
     return `https://player.vimeo.com/video/${encodeURIComponent(parsed.id)}?${params}`;
   }
   // mp4 — the id *is* the file URL.

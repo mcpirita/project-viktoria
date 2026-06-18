@@ -167,9 +167,12 @@ function Tile({
     />
   );
 
-  // Real video link → silent looping autoplay-in-view background; the tile links
-  // through to the full work card (controls + sound) on tap.
-  if (entry.isVideo && entry.video) {
+  // Real video → silent looping autoplay-in-view background; the tile links
+  // through to the full work card (controls + sound) on tap. Prefer a
+  // self-hosted loop (Phase 1.5, light <video>, near-instant); fall back to the
+  // Vimeo/YouTube iframe when only a `video` URL exists. A work needs at least
+  // one of the two to animate in place — otherwise it shows the static poster.
+  if (entry.isVideo && (entry.loopSrc || entry.video)) {
     const alt = [entry.client, entry.title].filter(Boolean).join(" — ");
     return (
       <Link href={`/work/${entry.slug}`} className="group block outline-none">
@@ -177,6 +180,7 @@ function Tile({
           className={`relative ${ratioClass} overflow-hidden rounded-[--radius-sm] bg-[--color-rose-deep]`}
         >
           <AutoplayBackground
+            loop={entry.loopSrc}
             src={entry.video}
             posterSrc={p?.src}
             title={alt}

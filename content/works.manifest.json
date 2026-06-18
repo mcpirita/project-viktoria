@@ -496,6 +496,31 @@
       "works/bmw-f74/low-quality-screenshot-2026-03-13-at-18-20-48-2000.avif"
     ]
   },
+  "works/bolt-caromatherapy/loop": {
+    "kind": "loop",
+    "width": 800,
+    "height": 450,
+    "aspectRatio": 1.7778,
+    "durationSeconds": 7,
+    "widths": [
+      720,
+      480
+    ],
+    "loop": {
+      "webm": "works/bolt-caromatherapy/loop-720.webm",
+      "mp4": "works/bolt-caromatherapy/loop-720.mp4"
+    },
+    "loopMobile": {
+      "webm": "works/bolt-caromatherapy/loop-480.webm",
+      "mp4": "works/bolt-caromatherapy/loop-480.mp4"
+    },
+    "files": [
+      "works/bolt-caromatherapy/loop-720.webm",
+      "works/bolt-caromatherapy/loop-720.mp4",
+      "works/bolt-caromatherapy/loop-480.webm",
+      "works/bolt-caromatherapy/loop-480.mp4"
+    ]
+  },
   "works/bolt-caromatherapy/screenshot-2026-03-15-at-18-14-37": {
     "width": 3024,
     "height": 1694,
@@ -657,6 +682,31 @@
       "works/bolt-interview/screenshot-2026-03-15-at-15-30-11-2000.avif"
     ]
   },
+  "works/bolt-whatever-you-do/loop": {
+    "kind": "loop",
+    "width": 800,
+    "height": 450,
+    "aspectRatio": 1.7778,
+    "durationSeconds": 7,
+    "widths": [
+      720,
+      480
+    ],
+    "loop": {
+      "webm": "works/bolt-whatever-you-do/loop-720.webm",
+      "mp4": "works/bolt-whatever-you-do/loop-720.mp4"
+    },
+    "loopMobile": {
+      "webm": "works/bolt-whatever-you-do/loop-480.webm",
+      "mp4": "works/bolt-whatever-you-do/loop-480.mp4"
+    },
+    "files": [
+      "works/bolt-whatever-you-do/loop-720.webm",
+      "works/bolt-whatever-you-do/loop-720.mp4",
+      "works/bolt-whatever-you-do/loop-480.webm",
+      "works/bolt-whatever-you-do/loop-480.mp4"
+    ]
+  },
   "works/bolt-whatever-you-do/screenshot-2026-03-15-at-17-28-43": {
     "width": 3018,
     "height": 1690,
@@ -744,6 +794,24 @@
       "works/bolt-whatever-you-do/whatever-youre-doing-theres-a-bolt-for-that-all-clips-v1-1080p-poster-800.avif",
       "works/bolt-whatever-you-do/whatever-youre-doing-theres-a-bolt-for-that-all-clips-v1-1080p-poster-1200.webp",
       "works/bolt-whatever-you-do/whatever-youre-doing-theres-a-bolt-for-that-all-clips-v1-1080p-poster-1200.avif"
+    ]
+  },
+  "works/delta/loop": {
+    "kind": "loop",
+    "width": 800,
+    "height": 450,
+    "aspectRatio": 1.7778,
+    "durationSeconds": 6,
+    "widths": [
+      720
+    ],
+    "loop": {
+      "webm": "works/delta/loop-720.webm",
+      "mp4": "works/delta/loop-720.mp4"
+    },
+    "files": [
+      "works/delta/loop-720.webm",
+      "works/delta/loop-720.mp4"
     ]
   },
   "works/delta/low-quality-use-this-img-9474-poster": {
@@ -942,6 +1010,31 @@
       "works/highsnobiety-x-jameson/jameson-smooth-17sec-v1-poster-800.avif",
       "works/highsnobiety-x-jameson/jameson-smooth-17sec-v1-poster-1200.webp",
       "works/highsnobiety-x-jameson/jameson-smooth-17sec-v1-poster-1200.avif"
+    ]
+  },
+  "works/highsnobiety-x-jameson/loop": {
+    "kind": "loop",
+    "width": 800,
+    "height": 450,
+    "aspectRatio": 1.7778,
+    "durationSeconds": 7,
+    "widths": [
+      720,
+      480
+    ],
+    "loop": {
+      "webm": "works/highsnobiety-x-jameson/loop-720.webm",
+      "mp4": "works/highsnobiety-x-jameson/loop-720.mp4"
+    },
+    "loopMobile": {
+      "webm": "works/highsnobiety-x-jameson/loop-480.webm",
+      "mp4": "works/highsnobiety-x-jameson/loop-480.mp4"
+    },
+    "files": [
+      "works/highsnobiety-x-jameson/loop-720.webm",
+      "works/highsnobiety-x-jameson/loop-720.mp4",
+      "works/highsnobiety-x-jameson/loop-480.webm",
+      "works/highsnobiety-x-jameson/loop-480.mp4"
     ]
   },
   "works/highsnobiety-x-jameson/low-quality-screenshot-2026-03-15-at-14-48-43": {
@@ -1965,6 +2058,31 @@
       "works/maison-margiela-tommy-cash/tommy-cash-x-maison-margiela-2-800.avif"
     ]
   },
+  "works/tele-2/loop": {
+    "kind": "loop",
+    "width": 800,
+    "height": 450,
+    "aspectRatio": 1.7778,
+    "durationSeconds": 7,
+    "widths": [
+      720,
+      480
+    ],
+    "loop": {
+      "webm": "works/tele-2/loop-720.webm",
+      "mp4": "works/tele-2/loop-720.mp4"
+    },
+    "loopMobile": {
+      "webm": "works/tele-2/loop-480.webm",
+      "mp4": "works/tele-2/loop-480.mp4"
+    },
+    "files": [
+      "works/tele-2/loop-720.webm",
+      "works/tele-2/loop-720.mp4",
+      "works/tele-2/loop-480.webm",
+      "works/tele-2/loop-480.mp4"
+    ]
+  },
   "works/tele-2/screenshot-2026-03-15-at-17-10-21": {
     "width": 2942,
     "height": 1598,
@@ -2146,6 +2264,31 @@
       "works/tommy-cash-social/tommy-cash-social-post-1200.avif"
     ]
   },
+  "works/tommy-lotto/loop": {
+    "kind": "loop",
+    "width": 800,
+    "height": 450,
+    "aspectRatio": 1.7778,
+    "durationSeconds": 7,
+    "widths": [
+      720,
+      480
+    ],
+    "loop": {
+      "webm": "works/tommy-lotto/loop-720.webm",
+      "mp4": "works/tommy-lotto/loop-720.mp4"
+    },
+    "loopMobile": {
+      "webm": "works/tommy-lotto/loop-480.webm",
+      "mp4": "works/tommy-lotto/loop-480.mp4"
+    },
+    "files": [
+      "works/tommy-lotto/loop-720.webm",
+      "works/tommy-lotto/loop-720.mp4",
+      "works/tommy-lotto/loop-480.webm",
+      "works/tommy-lotto/loop-480.mp4"
+    ]
+  },
   "works/tommy-lotto/use-this-img-7366": {
     "width": 1920,
     "height": 1080,
@@ -2164,6 +2307,31 @@
       "works/tommy-lotto/use-this-img-7366-800.avif",
       "works/tommy-lotto/use-this-img-7366-1200.webp",
       "works/tommy-lotto/use-this-img-7366-1200.avif"
+    ]
+  },
+  "works/victorinox/loop": {
+    "kind": "loop",
+    "width": 800,
+    "height": 450,
+    "aspectRatio": 1.7778,
+    "durationSeconds": 7,
+    "widths": [
+      720,
+      480
+    ],
+    "loop": {
+      "webm": "works/victorinox/loop-720.webm",
+      "mp4": "works/victorinox/loop-720.mp4"
+    },
+    "loopMobile": {
+      "webm": "works/victorinox/loop-480.webm",
+      "mp4": "works/victorinox/loop-480.mp4"
+    },
+    "files": [
+      "works/victorinox/loop-720.webm",
+      "works/victorinox/loop-720.mp4",
+      "works/victorinox/loop-480.webm",
+      "works/victorinox/loop-480.mp4"
     ]
   },
   "works/victorinox/low-quality-use-this-upscalemedia-transformed": {
@@ -2480,6 +2648,31 @@
       "works/victorinox/process-img-8438-1200.avif",
       "works/victorinox/process-img-8438-2000.webp",
       "works/victorinox/process-img-8438-2000.avif"
+    ]
+  },
+  "works/yale-smart-locks/loop": {
+    "kind": "loop",
+    "width": 800,
+    "height": 450,
+    "aspectRatio": 1.7778,
+    "durationSeconds": 7,
+    "widths": [
+      720,
+      480
+    ],
+    "loop": {
+      "webm": "works/yale-smart-locks/loop-720.webm",
+      "mp4": "works/yale-smart-locks/loop-720.mp4"
+    },
+    "loopMobile": {
+      "webm": "works/yale-smart-locks/loop-480.webm",
+      "mp4": "works/yale-smart-locks/loop-480.mp4"
+    },
+    "files": [
+      "works/yale-smart-locks/loop-720.webm",
+      "works/yale-smart-locks/loop-720.mp4",
+      "works/yale-smart-locks/loop-480.webm",
+      "works/yale-smart-locks/loop-480.mp4"
     ]
   },
   "works/yale-smart-locks/screenshot-2026-06-18-at-22-15-33": {

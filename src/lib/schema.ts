@@ -111,6 +111,12 @@ export const workSchema = z.object({
       "video: ожидается URL (YouTube/Vimeo) или root-относительный путь к видеофайлу (/works/.../file.mp4)",
     )
     .optional(),
+  /**
+   * С какой секунды мастер-видео резать петлю для грида (Фаза 1.5, пайплайн
+   * `make-loops.ts`). Только подсказка для пайплайна — сам сайт это поле не
+   * рендерит, он лишь проводит его наружу. По умолчанию 0 (с начала).
+   */
+  loopStart: z.number().min(0).default(0),
   /** Порядок вывода: меньше = выше. */
   order: z.number().int().default(0),
   /**
@@ -158,6 +164,55 @@ export type ResolvedImage = {
 };
 
 /**
+ * Self-hosted фоновый луп для грида (Фаза 1.5, стратегия A).
+ *
+ * Пайплайн (`scripts/make-loops.ts`) кладёт короткие сжатые петли в
+ * `public/works/<slug>/loop-720.{webm,mp4}` (+ опц. `loop-480.{webm,mp4}` под
+ * mobile) и регистрирует их в `content/works.manifest.json`. lib/works.ts
+ * заполняет это поле **автодетектом по наличию файла** (см. resolveLoop) — без
+ * ручного редактирования index.json (меньше трения, Keystatic-совместимо).
+ *
+ * Пути — root-относительные URL под `/public`, готовые к `<source src>`.
+ * `null` (точнее, поле отсутствует) — лупа для работы нет → грид падает на
+ * Vimeo/YouTube-iframe-фолбэк, как раньше.
+ */
+export type LoopSrc = {
+  /** WebM (VP9/AV1) 720p — основной источник. */
+  webm: string;
+  /** MP4 (H.264) 720p — фолбэк для Safari/старых браузеров. */
+  mp4: string;
+  /** Опц. 480p-вариант (webm+mp4) под mobile/узкие экраны. */
+  loop480?: { webm: string; mp4: string };
+};
+
+/**
+ * Запись лупа в манифесте (контракт с пайплайн-агентом, Фаза 1.5).
+ *
+ * Ключ в манифесте: `works/<slug>/loop` (один на работу — в отличие от записей
+ * изображений `works/<slug>/<basename>`). `kind: "loop"` отличает её от
+ * `ImageMeta`. Пути в `loop`/`loopMobile` — относительные `/public` без
+ * ведущего `/` (как `files` у постеров, напр. `works/delta/loop-720.webm`);
+ * resolveLoop добавляет ведущий `/` при сборке `LoopSrc`.
+ *
+ * Манифест-запись опциональна: lib/works.ts всё равно автодетектит лупы по
+ * наличию файлов на диске, так что грид оживёт, даже если запись забыли. Запись
+ * нужна для Фазы 2 (Keystatic Reader читает манифест, не диск) и как явный
+ * реестр деривативов, по аналогии с постерами. Формат — контракт с
+ * `scripts/make-loops.ts` (он же писатель этой записи).
+ */
+export type LoopManifestEntry = {
+  kind: "loop";
+  width?: number;
+  height?: number;
+  aspectRatio?: number;
+  durationSeconds?: number;
+  widths?: number[];
+  loop: { webm: string; mp4: string };
+  loopMobile?: { webm: string; mp4: string };
+  files?: string[];
+};
+
+/**
  * Финальный объект работы, который отдают функции lib/works.ts наружу.
  * Гарантированно содержит вычисленный `slug`, а `final`/`process` —
  * это `ResolvedImage[]` (с опциональными метаданными), а не голые строки.
@@ -166,4 +221,9 @@ export type ResolvedWork = Omit<Work, "final" | "process" | "slug"> & {
   slug: string;
   final: ResolvedImage[];
   process: ResolvedImage[];
+  /**
+   * Self-hosted фоновый луп для грида, если он есть (Фаза 1.5). Заполняется
+   * автодетектом в lib/works.ts. `null` → лупа нет, грид использует Vimeo-фолбэк.
+   */
+  loopSrc: LoopSrc | null;
 };
