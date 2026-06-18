@@ -25,7 +25,49 @@ import type { IndexEntry } from "./types";
  * Photo tiles link to /work/<slug>. Video tiles show a play marker; once a real
  * `video` URL exists they play inline through <VideoEmbed>, otherwise they also
  * link through to the project card.
+ *
+ * Mixed rows: the field is a large, cinematic 2-up by default (Victoria's
+ * feedback 2026-06-18). A contiguous run of ≥2 photo-only works is pulled out
+ * into a compact BAND — a denser strip (up to 3-up on desktop, square tiles)
+ * that fits more works on one line without shrinking the video tiles around it.
+ * A lone photo stays in the 2-up flow, so the surrounding rows stay flush.
  */
+
+/** A laid-out segment of the showcase: the big 2-up grid, or a compact band. */
+type Block =
+  | { kind: "grid"; items: IndexEntry[] }
+  | { kind: "band"; items: IndexEntry[] };
+
+/**
+ * Split the (already filtered) entries into blocks. Maximal runs of ≥2
+ * consecutive photo tiles become a `band`; everything else (videos and lone
+ * photos) accumulates into the standard 2-up `grid`. Computed per render, so it
+ * adapts to the active category filter.
+ */
+function toBlocks(entries: IndexEntry[]): Block[] {
+  const blocks: Block[] = [];
+  let buf: IndexEntry[] = [];
+  const flush = () => {
+    if (buf.length) blocks.push({ kind: "grid", items: buf });
+    buf = [];
+  };
+  let i = 0;
+  while (i < entries.length) {
+    let j = i;
+    while (j < entries.length && !entries[j].isVideo) j++;
+    if (j - i >= 2) {
+      flush();
+      blocks.push({ kind: "band", items: entries.slice(i, j) });
+      i = j;
+    } else {
+      buf.push(entries[i]);
+      i++;
+    }
+  }
+  flush();
+  return blocks;
+}
+
 export function WorkGrid({
   entries,
   active,
@@ -37,6 +79,10 @@ export function WorkGrid({
 }) {
   const filtered =
     active === ALL ? entries : entries.filter((e) => e.category === active);
+
+  const blocks = toBlocks(filtered);
+  // Continuous index across blocks so only the first two tiles get LCP priority.
+  let seen = 0;
 
   return (
     <div>
@@ -61,14 +107,32 @@ export function WorkGrid({
           </p>
         </div>
       ) : (
-        // mobile: 1 col · sm & lg: even 2-up — every tile large, rows always flush.
-        <ul className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-x-7 lg:gap-x-8 lg:gap-y-14">
-          {filtered.map((entry, i) => (
-            <li key={entry.slug}>
-              <Tile entry={entry} priority={i < 2} />
-            </li>
-          ))}
-        </ul>
+        <div className="flex flex-col gap-y-10 lg:gap-y-14">
+          {blocks.map((block, bi) => {
+            // mobile: 1 col · sm+: large even 2-up (grid) or compact 3-up (band).
+            const listClass =
+              block.kind === "band"
+                ? "grid grid-cols-1 gap-y-10 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-0"
+                : "grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-x-7 lg:gap-x-8 lg:gap-y-14";
+            return (
+              <ul key={bi} className={listClass}>
+                {block.items.map((entry) => {
+                  const priority = seen < 2;
+                  seen++;
+                  return (
+                    <li key={entry.slug}>
+                      <Tile
+                        entry={entry}
+                        priority={priority}
+                        variant={block.kind === "band" ? "band" : "feature"}
+                      />
+                    </li>
+                  );
+                })}
+              </ul>
+            );
+          })}
+        </div>
       )}
     </div>
   );
@@ -77,15 +141,22 @@ export function WorkGrid({
 function Tile({
   entry,
   priority,
+  variant = "feature",
 }: {
   entry: IndexEntry;
   priority: boolean;
+  variant?: "feature" | "band";
 }) {
   const p = entry.preview;
-  // One cinematic ratio for every tile: a calm 4/3 on mobile, widescreen 3/2 on
-  // sm+ where the 2-up lives — rows stay flush and tiles stay large.
-  const ratioClass = "aspect-[4/3] sm:aspect-[3/2]";
-  const sizes = "(min-width: 640px) 48vw, 100vw";
+  // Feature tiles: one cinematic ratio (calm 4/3 on mobile, widescreen 3/2 on
+  // sm+). Band tiles: compact squares — these are near-square social/campaign
+  // stills, and squares keep the denser strip flush.
+  const ratioClass =
+    variant === "band" ? "aspect-square" : "aspect-[4/3] sm:aspect-[3/2]";
+  const sizes =
+    variant === "band"
+      ? "(min-width: 640px) 31vw, 45vw"
+      : "(min-width: 640px) 48vw, 100vw";
 
   const caption = (
     <WorkCaption

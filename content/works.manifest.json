@@ -1,4 +1,64 @@
 {
+  "works/adidas-tommy-cash/tommy-cash-x-adidas": {
+    "width": 1074,
+    "height": 1146,
+    "aspectRatio": 0.9372,
+    "blurDataURL": "data:image/webp;base64,UklGRowAAABXRUJQVlA4IIAAAAAQBACdASoUABUAPu1qrVCppaQiqAqpMB2JZwAAHeqCb7OvfRjp3l3/sAD+r4+Rmgdz3ZsOvr4zKghAKQtBsgAjY5d8wq0ZoYQJzmFtmsfeFN1IECZjzTuVxQn406O/H3MkdtIK4wxGDwnZTi6zvvBG1urXBtZ2KFApTBuREagAAA==",
+    "widths": [
+      400,
+      800
+    ],
+    "kind": "image",
+    "files": [
+      "works/adidas-tommy-cash/tommy-cash-x-adidas-400.webp",
+      "works/adidas-tommy-cash/tommy-cash-x-adidas-400.avif",
+      "works/adidas-tommy-cash/tommy-cash-x-adidas-800.webp",
+      "works/adidas-tommy-cash/tommy-cash-x-adidas-800.avif"
+    ]
+  },
+  "works/adidas-tommy-cash/tommy-cash-x-adidas-2": {
+    "width": 2364,
+    "height": 2364,
+    "aspectRatio": 1,
+    "blurDataURL": "data:image/webp;base64,UklGRrwAAABXRUJQVlA4ILAAAACwBACdASoUABQAPu1ur1IppiQiqAgBMB2JZwDOPJUFo2lcUxJ62XNke6SUI+qQAPcsHU5l6Qc0PSxTq/n1fw6F1WU+dAkZtmcAAbUEwoOzTdVPHG5EI/Fh3HBIDR+eyAf200DWCjBpfNo/RuvV5CspPwgFONCgroiYJ3m+l51b97w7/EjdrEQAdTUIMw7C71DvgC0L4fUZKvmGE7noWVtTr9xS90UN8r2b4QTAIWgAAA==",
+    "widths": [
+      400,
+      800,
+      1200,
+      2000
+    ],
+    "kind": "image",
+    "files": [
+      "works/adidas-tommy-cash/tommy-cash-x-adidas-2-400.webp",
+      "works/adidas-tommy-cash/tommy-cash-x-adidas-2-400.avif",
+      "works/adidas-tommy-cash/tommy-cash-x-adidas-2-800.webp",
+      "works/adidas-tommy-cash/tommy-cash-x-adidas-2-800.avif",
+      "works/adidas-tommy-cash/tommy-cash-x-adidas-2-1200.webp",
+      "works/adidas-tommy-cash/tommy-cash-x-adidas-2-1200.avif",
+      "works/adidas-tommy-cash/tommy-cash-x-adidas-2-2000.webp",
+      "works/adidas-tommy-cash/tommy-cash-x-adidas-2-2000.avif"
+    ]
+  },
+  "works/adidas-tommy-cash/tommy-cash-x-adidas-3": {
+    "width": 1500,
+    "height": 1500,
+    "aspectRatio": 1,
+    "blurDataURL": "data:image/webp;base64,UklGRogAAABXRUJQVlA4IHwAAABwBACdASoUABQAPu1qr1AppaQiqAqpMB2JZwDA3AUZfuIDMuUo0pi0joJ+AAD+2Vo8arDj9tcPUe1Fm6t61ryF0P+JmSDSwFTbEGYZ1SFR2KaOXnmwFyMcWYAXo3hYqA3JCJnl70h2HG/zD6PnA1oPh0mIuoi3w9QG4EAA",
+    "widths": [
+      400,
+      800,
+      1200
+    ],
+    "kind": "image",
+    "files": [
+      "works/adidas-tommy-cash/tommy-cash-x-adidas-3-400.webp",
+      "works/adidas-tommy-cash/tommy-cash-x-adidas-3-400.avif",
+      "works/adidas-tommy-cash/tommy-cash-x-adidas-3-800.webp",
+      "works/adidas-tommy-cash/tommy-cash-x-adidas-3-800.avif",
+      "works/adidas-tommy-cash/tommy-cash-x-adidas-3-1200.webp",
+      "works/adidas-tommy-cash/tommy-cash-x-adidas-3-1200.avif"
+    ]
+  },
   "works/adidas/low-quality-screenshot-2026-03-13-at-17-29-28": {
     "width": 3024,
     "height": 1652,
@@ -1871,6 +1931,40 @@
       "works/lascana/process-img-4856-2000.avif"
     ]
   },
+  "works/maison-margiela-tommy-cash/tommy-cash-x-maison-margiela": {
+    "width": 1080,
+    "height": 1080,
+    "aspectRatio": 1,
+    "blurDataURL": "data:image/webp;base64,UklGRrIAAABXRUJQVlA4IKYAAACwBACdASoUABQAPu1ur1IppiQiqAgBMB2JZwC/OYyoXct9e4ovD61IunnNzBgAAPhFbHifqOfHCOwPscygn4GhkALriMmPZF0Ev9XxjPvobF179vLbajCzwMZIlHhn9btYdMuEgSz/fLNx+ATg99NALidSH9MfjY/ubqd51dxhJ1BHqp6ya8VGIU1H3lfU55Y8+w2jqmYrzQ35ZVchygxWCgmhgAAA",
+    "widths": [
+      400,
+      800
+    ],
+    "kind": "image",
+    "files": [
+      "works/maison-margiela-tommy-cash/tommy-cash-x-maison-margiela-400.webp",
+      "works/maison-margiela-tommy-cash/tommy-cash-x-maison-margiela-400.avif",
+      "works/maison-margiela-tommy-cash/tommy-cash-x-maison-margiela-800.webp",
+      "works/maison-margiela-tommy-cash/tommy-cash-x-maison-margiela-800.avif"
+    ]
+  },
+  "works/maison-margiela-tommy-cash/tommy-cash-x-maison-margiela-2": {
+    "width": 1080,
+    "height": 1080,
+    "aspectRatio": 1,
+    "blurDataURL": "data:image/webp;base64,UklGRsIAAABXRUJQVlA4ILYAAACQBQCdASoUABQAPu1wsFIppiSiqAgBMB2JaACxH3KOO5OfxehIR4VTbDdYavlmp64uZUEcAAD+W++PnRIsOrofNwzoWfiaJd5wuLxDA0nbTOBLsFG9s8xdtnMe7VS64upQ3G081a7wjq47D3vfk4fPX5UmAV0Hz5uCZZF7FJt46TfZbPXByJSY3KbVErz0NxjDXSGfOwU66YRpdS6n8JmrNa00AwZ8NT6jn+hAJFaNfII2KAAAAA==",
+    "widths": [
+      400,
+      800
+    ],
+    "kind": "image",
+    "files": [
+      "works/maison-margiela-tommy-cash/tommy-cash-x-maison-margiela-2-400.webp",
+      "works/maison-margiela-tommy-cash/tommy-cash-x-maison-margiela-2-400.avif",
+      "works/maison-margiela-tommy-cash/tommy-cash-x-maison-margiela-2-800.webp",
+      "works/maison-margiela-tommy-cash/tommy-cash-x-maison-margiela-2-800.avif"
+    ]
+  },
   "works/tele-2/screenshot-2026-03-15-at-17-10-21": {
     "width": 2942,
     "height": 1598,
@@ -2030,6 +2124,26 @@
       "works/tommy-cash-eurovisioon/screenshot-2026-03-15-at-16-59-47-1200.avif",
       "works/tommy-cash-eurovisioon/screenshot-2026-03-15-at-16-59-47-2000.webp",
       "works/tommy-cash-eurovisioon/screenshot-2026-03-15-at-16-59-47-2000.avif"
+    ]
+  },
+  "works/tommy-cash-social/tommy-cash-social-post": {
+    "width": 1376,
+    "height": 1434,
+    "aspectRatio": 0.9596,
+    "blurDataURL": "data:image/webp;base64,UklGRrgAAABXRUJQVlA4IKwAAADwBACdASoUABUAPu1urlKppiQiqAgBMB2JZwDI1BEYYeD2Sf1NhVo6vJvz9vX9WPgA/up7KbgHwTcuyNjr/MkXR7oQvnt4PXXP8HCovw3xXyJ1YQoY9hHuq8OzRpmZLBJhDAIZThSsDk05stM95n22vktHaCIFRm/QteIsRTq2l75e7aW6I+NPvUJVDesnZgfCyDKFJ09S+a48bxfxhKoB8F0KIcuJXe9NEAAA",
+    "widths": [
+      400,
+      800,
+      1200
+    ],
+    "kind": "image",
+    "files": [
+      "works/tommy-cash-social/tommy-cash-social-post-400.webp",
+      "works/tommy-cash-social/tommy-cash-social-post-400.avif",
+      "works/tommy-cash-social/tommy-cash-social-post-800.webp",
+      "works/tommy-cash-social/tommy-cash-social-post-800.avif",
+      "works/tommy-cash-social/tommy-cash-social-post-1200.webp",
+      "works/tommy-cash-social/tommy-cash-social-post-1200.avif"
     ]
   },
   "works/tommy-lotto/use-this-img-7366": {

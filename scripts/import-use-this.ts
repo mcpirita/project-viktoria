@@ -58,12 +58,19 @@ type Manifest = Record<string, ManifestEntry>;
 
 /** The curated frames to import. workFolder is relative to ~/Downloads/Commercials. */
 const ITEMS: { workFolder: string; slug: string; rel: string }[] = [
-  { workFolder: "Tommy Lotto", slug: "tommy-lotto", rel: "Use this/IMG_7366.JPG" },
-  { workFolder: "Delta", slug: "delta", rel: "Low quality /Use this/IMG_9474.MOV" },
-  { workFolder: "Lascana", slug: "lascana", rel: "Low Quality/Use this/Upscale Image.png" },
-  { workFolder: "Lascana", slug: "lascana", rel: "Low Quality/Use this/upscalemedia-transformed.png" },
-  { workFolder: "Victorinox", slug: "victorinox", rel: "Low quality /Use this/upscalemedia-transformed copy.png" },
-  { workFolder: "Victorinox", slug: "victorinox", rel: "Low quality /Use this/upscalemedia-transformed.png" },
+  // Tommy Cash photo works — added as still-only grid tiles (no video). Two
+  // projects, set/props by Viktoria:
+  //   adidas-tommy-cash — the adidas Originals BY TOMMY CASH campaign (long
+  //     Superstar). Cover = the checkerboard long-shoe frame (2364²).
+  //   maison-margiela-tommy-cash — the Maison Margiela × Tommy Cash campaign
+  //     (clay-body set + bread slippers props). Cover = clay-body frame.
+  //   tommy-cash-social — the snowmobile / ice-hole social post.
+  { workFolder: "Tommy Cash", slug: "adidas-tommy-cash", rel: "Tommy Cash x Adidas 2.jpg" },
+  { workFolder: "Tommy Cash", slug: "adidas-tommy-cash", rel: "Tommy Cash x Adidas 3.jpg" },
+  { workFolder: "Tommy Cash", slug: "adidas-tommy-cash", rel: "Tommy Cash x Adidas.jpg" },
+  { workFolder: "Tommy Cash x Maison Margiela", slug: "maison-margiela-tommy-cash", rel: "Tommy Cash x Maison Margiela.jpg" },
+  { workFolder: "Tommy Cash x Maison Margiela", slug: "maison-margiela-tommy-cash", rel: "Tommy Cash x Maison Margiela 2.jpg" },
+  { workFolder: "Tommy Cash", slug: "tommy-cash-social", rel: "Tommy Cash Social Post.png" },
 ];
 
 function slugify(input: string): string {

@@ -46,7 +46,7 @@ const CLIENTS = [
 ];
 
 export default async function Home() {
-  const works = await getFeatured();
+  const works = await getFeatured(20);
 
   const entries: IndexEntry[] = works.map((w) => {
     const preview = pickCover(w.slug, w.cover, w.final, w.process);
