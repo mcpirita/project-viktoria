@@ -95,8 +95,20 @@ export const workSchema = z.object({
   final: z.array(imageRefSchema).default([]),
   /** Backstage / process-кадры — имена изображений там же. */
   process: z.array(imageRefSchema).default([]),
-  /** Опциональная ссылка на видео (YouTube/Vimeo/mp4) для VideoEmbed фазы G. */
-  video: z.url().optional(),
+  /**
+   * Опциональное видео для VideoEmbed (фаза G): либо полный URL YouTube/Vimeo,
+   * либо root-относительный путь к самостоятельно захостенному файлу в /public
+   * (например `/works/delta/img-9474.mp4`). Фасад (video/parse.ts) принимает оба.
+   */
+  video: z
+    .string()
+    .refine(
+      (v) =>
+        /^https?:\/\//i.test(v) ||
+        /^\/.*\.(mp4|webm|mov|m4v|ogg|ogv)(\?.*)?$/i.test(v),
+      "video: ожидается URL (YouTube/Vimeo) или root-относительный путь к видеофайлу (/works/.../file.mp4)",
+    )
+    .optional(),
   /** Порядок вывода: меньше = выше. */
   order: z.number().int().default(0),
   /**
