@@ -3,7 +3,6 @@ import { Body, Eyebrow, Heading, Section } from "@/components/ui";
 import { getFeatured } from "@/lib/works";
 import { pickCover } from "@/components/site/image";
 import { Showcase } from "@/components/site/Showcase";
-import { Marquee } from "@/components/site/Marquee";
 import type { IndexEntry } from "@/components/site/types";
 
 /**
@@ -100,9 +99,6 @@ export default async function Home() {
               treating every project, commercial or personal, as a complete
               visual world.
             </Body>
-            <div className="mt-10">
-              <Marquee items={CLIENTS} label="SELECTED CLIENTS:" />
-            </div>
           </div>
         </div>
       </Section>
