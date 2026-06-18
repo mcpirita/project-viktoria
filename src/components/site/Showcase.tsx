@@ -28,7 +28,11 @@ export function Showcase({
   return (
     <>
       <Header active={active} onSelect={setActive} marqueeItems={marqueeItems} />
-      <Section id="works" tone="rose">
+      <Section
+        id="works"
+        tone="rose"
+        className="!pt-[clamp(1.25rem,3vw,2.25rem)]"
+      >
         <WorkGrid entries={entries} active={active} />
       </Section>
     </>

@@ -16,16 +16,15 @@ import type { IndexEntry } from "./types";
  * (CLIENT, TITLE, PRODUCTION) beneath it, on the rose field.
  *
  * Layout is curated, not a wall: the parent passes ~8–12 featured works and the
- * grid re-lays them in place when the sticky header changes `active`. On lg the
- * tiles tile a 6-col grid as a STRUCTURED MOSAIC — homogeneous rows alternate
- * between two big tiles (span-3, cinematic) and three medium tiles (span-2),
- * with a rare full-width band (span-6) absorbing an odd trailing tile. Every row
- * fills all six columns and every tile in a row shares a height, so the mosaic
- * is varied (some big, some small) yet always tidy — no orphan, no ragged edge.
+ * grid re-lays them in place when the sticky header changes `active`. The grid is
+ * a calm, even TWO-UP on desktop — every tile is large and cinematic (no small
+ * three-across windows, per Victoria's feedback 2026-06-18). Tiles share one
+ * aspect ratio so rows stay flush; sm keeps the 2-up, mobile collapses to one
+ * column with vertical scroll.
  *
  * Photo tiles link to /work/<slug>. Video tiles show a play marker; once a real
  * `video` URL exists they play inline through <VideoEmbed>, otherwise they also
- * link through to the project card. Mobile: one column, vertical scroll.
+ * link through to the project card.
  */
 export function WorkGrid({
   entries,
@@ -62,11 +61,11 @@ export function WorkGrid({
           </p>
         </div>
       ) : (
-        // mobile: 1 col · sm: even 2-up · lg: 6-col structured mosaic (below).
-        <ul className="grid grid-cols-1 gap-x-5 gap-y-10 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-6">
-          {layout(filtered.length).map((kind, i) => (
-            <li key={filtered[i].slug} className={SPAN_CLASS[kind]}>
-              <Tile entry={filtered[i]} kind={kind} priority={i < 2} />
+        // mobile: 1 col · sm & lg: even 2-up — every tile large, rows always flush.
+        <ul className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-x-7 lg:gap-x-8 lg:gap-y-14">
+          {filtered.map((entry, i) => (
+            <li key={entry.slug}>
+              <Tile entry={entry} priority={i < 2} />
             </li>
           ))}
         </ul>
@@ -75,71 +74,18 @@ export function WorkGrid({
   );
 }
 
-/** Tile footprint on the lg mosaic. Each maps to a span + aspect + sizes hint. */
-type TileKind = "big" | "med" | "band";
-
-const SPAN_CLASS: Record<TileKind, string> = {
-  big: "lg:col-span-3",
-  med: "lg:col-span-2",
-  band: "lg:col-span-6",
-};
-
-/**
- * Pack `n` tiles into homogeneous, full-width rows on the 6-col lg grid:
- *   • a row of 2 big tiles (span-3)      → "big", "big"
- *   • a row of 3 medium tiles (span-2)   → "med", "med", "med"
- *   • a lone trailing tile               → "band" (span-6, full width)
- * Rows alternate big↔medium for rhythm; an odd leftover becomes a band so a row
- * is never half-empty. Returns a flat array of kinds, one per tile, in order.
- */
-function layout(n: number): TileKind[] {
-  const out: TileKind[] = [];
-  let rem = n;
-  // cycle of row sizes (tiles per row): big-pair (2) ↔ medium-triple (3).
-  const cycle = [2, 3];
-  let step = 0;
-  while (rem > 0) {
-    const want = cycle[step % cycle.length];
-    if (rem >= want) {
-      out.push(...(want === 2 ? (["big", "big"] as const) : (["med", "med", "med"] as const)));
-      rem -= want;
-      step++;
-    } else if (rem === 2) {
-      out.push("big", "big");
-      rem = 0;
-    } else {
-      // single tile left → full-width band (keeps the last row flush).
-      out.push("band");
-      rem = 0;
-    }
-  }
-  return out;
-}
-
 function Tile({
   entry,
-  kind,
   priority,
 }: {
   entry: IndexEntry;
-  kind: TileKind;
   priority: boolean;
 }) {
   const p = entry.preview;
-  // Each footprint gets its own cinematic ratio on lg; everything collapses to a
-  // calm 4/3 at sm/mobile so the 2-up and single-column rows stay even in height.
-  const ratioClass =
-    kind === "band"
-      ? "aspect-[4/3] lg:aspect-[2/1]"
-      : kind === "big"
-        ? "aspect-[4/3] lg:aspect-[3/2]"
-        : "aspect-[4/3]";
-  const sizes =
-    kind === "band"
-      ? "(min-width: 1024px) 92vw, (min-width: 640px) 50vw, 100vw"
-      : kind === "big"
-        ? "(min-width: 1024px) 46vw, (min-width: 640px) 50vw, 100vw"
-        : "(min-width: 1024px) 31vw, (min-width: 640px) 50vw, 100vw";
+  // One cinematic ratio for every tile: a calm 4/3 on mobile, widescreen 3/2 on
+  // sm+ where the 2-up lives — rows stay flush and tiles stay large.
+  const ratioClass = "aspect-[4/3] sm:aspect-[3/2]";
+  const sizes = "(min-width: 640px) 48vw, 100vw";
 
   const caption = (
     <WorkCaption
